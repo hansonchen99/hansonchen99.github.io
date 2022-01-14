@@ -4,20 +4,37 @@
   <meta charset="utf-8">
   
   
-  <title>Linux实战篇(五) - 网络配置 | 让自己变得优秀起来</title>
+  <title>Linux实战篇(五) - 网络配置、进程管理 | 让自己变得优秀起来</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="个人技术博客">
+  <meta name="description" content="1、Linux网络配置原理图（含虚拟机）  说明：Linux虚拟机和windows之间是通过windows的虚拟网卡(以太网适配器 VMware Network Adapter VMnet8) 构成了一个网络，它们之间可以进行通信。windows上有一个真实的网卡（可能是无线网卡，可能是物理网卡），这个真实的网卡再通过教室的网关就可以访问互联网。     2、查看网络IP和网关1、修改ip地址 (">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux实战篇(五) - 网络配置">
+<meta property="og:title" content="Linux实战篇(五) - 网络配置、进程管理">
 <meta property="og:url" content="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/index.html">
 <meta property="og:site_name" content="让自己变得优秀起来">
-<meta property="og:description" content="个人技术博客">
+<meta property="og:description" content="1、Linux网络配置原理图（含虚拟机）  说明：Linux虚拟机和windows之间是通过windows的虚拟网卡(以太网适配器 VMware Network Adapter VMnet8) 构成了一个网络，它们之间可以进行通信。windows上有一个真实的网卡（可能是无线网卡，可能是物理网卡），这个真实的网卡再通过教室的网关就可以访问互联网。     2、查看网络IP和网关1、修改ip地址 (">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114141316875.png">
+<meta property="og:image" content="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114142053767.png">
+<meta property="og:image" content="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114142853278.png">
+<meta property="og:image" content="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114143453897.png">
+<meta property="og:image" content="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114143855024.png">
+<meta property="og:image" content="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114152118193.png">
+<meta property="og:image" content="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114153149369.png">
+<meta property="og:image" content="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114153854433.png">
+<meta property="og:image" content="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114155022581.png">
+<meta property="og:image" content="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114160646075.png">
+<meta property="og:image" content="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114160254658.png">
+<meta property="og:image" content="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114161218408.png">
+<meta property="og:image" content="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114162515236.png">
+<meta property="og:image" content="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114163744841.png">
+<meta property="og:image" content="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114164746002.png">
+<meta property="og:image" content="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114165332327.png">
 <meta property="article:published_time" content="2022-01-14T03:36:32.000Z">
-<meta property="article:modified_time" content="2022-01-14T03:37:19.375Z">
+<meta property="article:modified_time" content="2022-01-14T09:07:16.856Z">
 <meta property="article:author" content="Mr.chen">
 <meta property="article:tag" content="后端博客">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114141316875.png">
   
     <link rel="alternate" href="/atom.xml" title="让自己变得优秀起来" type="application/atom+xml">
   
@@ -88,7 +105,7 @@
         
   
     <h1 class="p-name article-title" itemprop="headline name">
-      Linux实战篇(五) - 网络配置
+      Linux实战篇(五) - 网络配置、进程管理
     </h1>
   
 
@@ -96,11 +113,85 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <h3 id="1、Linux网络配置原理图（含虚拟机）"><a href="#1、Linux网络配置原理图（含虚拟机）" class="headerlink" title="1、Linux网络配置原理图（含虚拟机）"></a>1、Linux网络配置原理图（含虚拟机）</h3><img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114141316875.png" alt="image-20220114141316875" style="zoom:50%;">
+
+<p>说明：Linux虚拟机和windows之间是通过windows的虚拟网卡(以太网适配器 VMware Network Adapter VMnet8) 构成了一个网络，它们之间可以进行通信。windows上有一个真实的网卡（可能是无线网卡，可能是物理网卡），这个真实的网卡再通过教室的网关就可以访问互联网。</p>
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114142053767.png" alt="image-20220114142053767" style="zoom:50%;">
+
+
+
+<h3 id="2、查看网络IP和网关"><a href="#2、查看网络IP和网关" class="headerlink" title="2、查看网络IP和网关"></a>2、查看网络IP和网关</h3><h4 id="1、修改ip地址-修改虚拟网络的-ip"><a href="#1、修改ip地址-修改虚拟网络的-ip" class="headerlink" title="1、修改ip地址 (修改虚拟网络的 ip)"></a>1、修改ip地址 (修改虚拟网络的 ip)</h4><p>​    编辑 - 》虚拟网络编辑器</p>
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114142853278.png" alt="image-20220114142853278" style="zoom: 50%;">
+
+<h4 id="2、查看网关"><a href="#2、查看网关" class="headerlink" title="2、查看网关"></a>2、查看网关</h4><img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114143453897.png" alt="image-20220114143453897" style="zoom:50%;">
+
+<h4 id="3、查看-windows-环境的中-VMnet8-网络配置-ipconfig-指令"><a href="#3、查看-windows-环境的中-VMnet8-网络配置-ipconfig-指令" class="headerlink" title="3、查看 windows 环境的中 VMnet8 网络配置 (ipconfig 指令)"></a>3、查看 windows 环境的中 VMnet8 网络配置 (ipconfig 指令)</h4><p>​    1）使用ipconfig查看</p>
+<p>​    2）界面查看</p>
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114143855024.png" alt="image-20220114143855024" style="zoom:50%;">
+
+
+
+<h3 id="3、linux网络环境配置"><a href="#3、linux网络环境配置" class="headerlink" title="3、linux网络环境配置"></a>3、linux网络环境配置</h3><h4 id="1、第一种方式（自动获取）"><a href="#1、第一种方式（自动获取）" class="headerlink" title="1、第一种方式（自动获取）"></a>1、第一种方式（自动获取）</h4><img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114152118193.png" alt="image-20220114152118193" style="zoom:50%;">
+
+<p>缺点: linux 启动后会自动获取 IP,缺点是每次自动获取的 ip 地址可能不一样。这个不适用于做服务器，因为我们的服务器的 ip 需要时固定的。</p>
+<h4 id="2、第二种方法-指定固定的-ip"><a href="#2、第二种方法-指定固定的-ip" class="headerlink" title="2、第二种方法(指定固定的 ip)"></a>2、第二种方法(指定固定的 ip)</h4><p>​           说明：直 接 修 改 配 置 文 件 来 指 定 IP, 并 可 以 连 接 到 外 网 ( 程 序 员 推 荐 ) ， </p>
+<p>​            编 辑    vim /etc/sysconfig/network-scripts/ifcfg-ens33</p>
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114153149369.png" alt="image-20220114153149369" style="zoom:50%;">
+
+<p>​            要求：将 ip 地址配置的静态的，ip 地址为 192.168.18.130</p>
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114153854433.png" alt="image-20220114153854433" style="zoom:50%;">
+
+<p>​                        <strong>修改后，一定要 重启服务</strong></p>
+<p>​                            1)  service network restart</p>
+<p>​                            2)  <strong>reboot 重启系统</strong></p>
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114155022581.png" alt="image-20220114155022581" style="zoom:50%;">
+
+
+
+<h3 id="4、进程管理"><a href="#4、进程管理" class="headerlink" title="4、进程管理"></a>4、进程管理</h3><h4 id="1、说明"><a href="#1、说明" class="headerlink" title="1、说明"></a>1、说明</h4><p>​            查看进行使用的指令是   ps ,一般来说使用的参数是 ps -aux</p>
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114160646075.png" alt="image-20220114160646075" style="zoom:40%;">
+
+<h4 id="2、ps指令详解"><a href="#2、ps指令详解" class="headerlink" title="2、ps指令详解"></a>2、ps指令详解</h4><img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114160254658.png" alt="image-20220114160254658" style="zoom:50%;">
+
+
+
+<h4 id="3、应用实例"><a href="#3、应用实例" class="headerlink" title="3、应用实例"></a>3、应用实例</h4><p>​    要求：以全格式显示当前所有的进程，查看进程的父进程。</p>
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114161218408.png" alt="image-20220114161218408" style="zoom:50%;">
+
+
+
+<h4 id="4、终止进程kill-和killall"><a href="#4、终止进程kill-和killall" class="headerlink" title="4、终止进程kill 和killall"></a>4、终止进程kill 和killall</h4><pre><code>  1、介绍
+</code></pre>
+<p>​            若是某个进程执行一半需要停止时，或是已消了很大的系统资源时，此时可以考虑停止该进程。使用 <strong>kill 命令</strong>来完成此项任务。</p>
+<p>​      2、基本语法</p>
+<p>​                <strong>kill  [选项] 进程号（功能描述：通过进程号杀死进程）</strong></p>
+<p>​                <strong>killall 进程名称（功能描述：通过进程名称杀死进程，也支持通配符，这在系统因负载过大而变得很慢时很有用）</strong></p>
+<p>​       3、常用选项</p>
+<p>​            <strong>-9 ： 表示强迫进程立即停止</strong></p>
+<p>​        4、最佳实践</p>
+<p>​            案例 1：踢掉某个非法登录用户</p>
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114162515236.png" alt="image-20220114162515236" style="zoom:50%;">
+
+
+
+<h4 id="5、查看进程树-pstree"><a href="#5、查看进程树-pstree" class="headerlink" title="5、查看进程树 pstree"></a>5、查看进程树 pstree</h4><p>1、基本语法：</p>
+<p>​    pstree [选项] ,可以更加直观的来看进程信息</p>
+<p>2、常用选项：</p>
+<p>​        -p :显示进程的 PID</p>
+<p>​        -u :显示进程的所属用户</p>
+<h3 id="5、服务（service）管理"><a href="#5、服务（service）管理" class="headerlink" title="5、服务（service）管理"></a>5、服务（service）管理</h3><h4 id="1、服务介绍"><a href="#1、服务介绍" class="headerlink" title="1、服务介绍"></a>1、服务介绍</h4><p>​              服务(service) 本质就是进程，但是是运行在后台的，通常都会监听某个端口，等待其它程序的请求，比如(mysql , sshd 防火墙等)，因此我们又称为守护进程，是 Linux 中非常重要的知识点。</p>
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114163744841.png" alt="image-20220114163744841" style="zoom:50%;">
+
+<h4 id="2、telnet-测试某个端口是否可以访问"><a href="#2、telnet-测试某个端口是否可以访问" class="headerlink" title="2、telnet 测试某个端口是否可以访问"></a>2、telnet 测试某个端口是否可以访问</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">telnet ip地址 端口号</span><br></pre></td></tr></table></figure>
+
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114164746002.png" alt="image-20220114164746002" style="zoom:50%;">
+
+<h4 id="3、查看服务名"><a href="#3、查看服务名" class="headerlink" title="3、查看服务名"></a>3、查看服务名</h4><p>​            1、/etc/init.d/服务名称</p>
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114165332327.png" alt="image-20220114165332327" style="zoom:50%;">
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/" data-id="ckydvhbkn000230un048wclhm" data-title="Linux实战篇(五) - 网络配置" class="article-share-link">分享</a>
+      <a data-url="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/" data-id="ckye6gn8l0002p4un6v0sdd1t" data-title="Linux实战篇(五) - 网络配置、进程管理" class="article-share-link">分享</a>
       
       
       
@@ -151,7 +242,7 @@
       <ul>
         
           <li>
-            <a href="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/">Linux实战篇(五) - 网络配置</a>
+            <a href="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/">Linux实战篇(五) - 网络配置、进程管理</a>
           </li>
         
           <li>
