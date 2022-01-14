@@ -74,9 +74,162 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-Linux" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-Linux实战篇(五)" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2022/01/13/Linux/" class="article-date">
+    <a href="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/" class="article-date">
+  <time class="dt-published" datetime="2022-01-14T03:36:32.000Z" itemprop="datePublished">2022-01-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/">Linux实战篇(五) - 网络配置</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/" data-id="ckydvhbkn000230un048wclhm" data-title="Linux实战篇(五) - 网络配置" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Linux实战篇(四)" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/" class="article-date">
+  <time class="dt-published" datetime="2022-01-14T01:53:53.000Z" itemprop="datePublished">2022-01-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/">Linux实战篇（四）- 磁盘</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="一、Linux磁盘分区"><a href="#一、Linux磁盘分区" class="headerlink" title="一、Linux磁盘分区"></a>一、Linux磁盘分区</h3><h4 id="1、原理介绍"><a href="#1、原理介绍" class="headerlink" title="1、原理介绍"></a>1、原理介绍</h4><p>​    1) Linux 来说无论有几个分区，分给哪一目录使用，它归根结底就只有一个根目录，一个独立且唯一的文件结构 , Linux 中每个分区都是用来组成整个文件系统的一部分。</p>
+<p>​    2) Linux 采用了一种叫“载入”的处理方法，它的整个文件系统中包含了一整套的文件和目录， 且将一个分区和一个目录联系起来。这时要载入的一个分区将使它的存储空间在一个目录下获得。</p>
+<h4 id="2、示意图"><a href="#2、示意图" class="headerlink" title="2、示意图"></a>2、示意图</h4><p>​    <img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114101732404.png" alt="image-20220114101732404" style="zoom:50%;"></p>
+<h4 id="3、硬盘说明"><a href="#3、硬盘说明" class="headerlink" title="3、硬盘说明"></a>3、硬盘说明</h4><p>​    1) Linux 硬盘分 <strong>IDE 硬盘和 SCSI 硬盘</strong>，目前基本上是 <strong>SCSI 硬盘</strong></p>
+<p>​    2) 对于 IDE 硬盘，驱动器标识符为“hdx<del>”,其中“hd”表明分区所在设备的类型，这里是指 IDE 硬盘了。“x”为盘号（a 为基本盘，b 为基本从属盘，c 为辅助主盘，d 为辅助从属盘）,“</del>”代表分区，前四个分区用数字 1 到 4 表示，它们是主分区或扩展分区，从 5 开始就是逻辑分区。例，hda3 表示为第一个 IDE 硬盘上的第三个主分区或扩展分区,hdb2 表示为第二个 IDE 硬盘上的第二个主分区或扩展分区。</p>
+<p>​    3) <strong>对于 SCSI 硬盘则标识为“sdx~”，SCSI 硬盘是用“sd”来表示分区所在设备的类型的，其余则和 IDE 硬盘的表示方法一样。</strong></p>
+<p>​    4) 使用 <strong>lsblk 指令</strong>查看当前系统的分区情况</p>
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114101659455.png" alt="image-20220114101659455">
+
+
+
+<h4 id="4、挂载的经典案例"><a href="#4、挂载的经典案例" class="headerlink" title="4、挂载的经典案例"></a>4、挂载的经典案例</h4><h5 id="1、需求说明"><a href="#1、需求说明" class="headerlink" title="1、需求说明"></a>1、需求说明</h5><pre><code> 1、需求是给我们的 Linux 系统增加一个新的硬盘，并且挂载到/home/newdisk
+</code></pre>
+<h5 id><a href="#" class="headerlink" title></a><img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114102620885.png" alt="image-20220114102620885" style="zoom: 50%;"></h5><h5 id="2、具体步骤"><a href="#2、具体步骤" class="headerlink" title="2、具体步骤"></a>2、具体步骤</h5><p>​    <strong>1）虚拟机增加硬盘步骤</strong></p>
+<p>​         在【虚拟机】菜单中，选择【设置】，然后设备列表里添加硬盘，然后一路【下一步】，中间只有选择磁盘大小的地方需要修改，至到完成。然后重启系统（才能识别）！</p>
+<p>​        <img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114104221617.png" alt="image-20220114104221617" style="zoom:50%;"></p>
+<p>​    <strong>2）虚拟机增加硬盘步骤 2</strong></p>
+<p>​        分区命令   fdisk   /dev/sdb</p>
+<p>​        开始对/sdb 分区</p>
+<p>​            •      m  显示命令列表</p>
+<p>​            •      p   显示磁盘分区 同 fdisk  –l</p>
+<p>​            •      n  新增分区</p>
+<p>​            •       d 删除分区</p>
+<p>​            •      w  写入并退出</p>
+<p>说明： 开始分区后输入 n，新增分区，然后选择 p ，分区类型为主分区。两次回车默认剩余全部空间。最后输入 w 写入分区并退出，若不保存退出输入 q。</p>
+<p>​    <strong>3）虚拟机增加硬盘步骤 3</strong></p>
+<p>​        格式化磁盘</p>
+<p>​            分区命令:mkfs -t  ext4   /dev/sdb1</p>
+<p>​            其中 ext4 是分区类型</p>
+<p>​    <strong>4）虚拟机增加硬盘步骤 4</strong></p>
+<p>挂载: 将一个分区与一个目录联系起来，</p>
+<p>​    •  mount     设备名称 挂载目录</p>
+<p>​    •  例如：  mount           /dev/sdb1 /newdisk</p>
+<p>​    •  umount          设备名称  或者  挂载目录</p>
+<p>​    •   例如：    umount /dev/sdb1 或 者  umount /newdisk</p>
+<p>​    <strong>5)  虚拟机增加硬盘步骤 5</strong></p>
+<p>​         永久挂载: 通过修改/etc/fstab 实现挂载添加完成后  执行 <strong>mount –a</strong> 即刻生效</p>
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114110209700.png" alt="image-20220114110209700" style="zoom:50%;">
+
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114110314088.png" alt="image-20220114110314088" style="zoom:50%;">
+
+
+
+<h4 id="5、磁盘情况查询"><a href="#5、磁盘情况查询" class="headerlink" title="5、磁盘情况查询"></a>5、磁盘情况查询</h4><h5 id="1、查询系统整体磁盘使用情况"><a href="#1、查询系统整体磁盘使用情况" class="headerlink" title="1、查询系统整体磁盘使用情况"></a>1、查询系统整体磁盘使用情况</h5><p>​            基本语法：<strong>df -h</strong></p>
+<p>​            应用实例</p>
+<pre><code>           查询系统整体磁盘使用情况
+</code></pre>
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114111252847.png" alt="image-20220114111252847" style="zoom:50%;">
+
+<h5 id="2、查询指定目录的磁盘占用情况"><a href="#2、查询指定目录的磁盘占用情况" class="headerlink" title="2、查询指定目录的磁盘占用情况"></a>2、查询指定目录的磁盘占用情况</h5><p>​        1）基本语法</p>
+<p>​            du -h  /目录</p>
+<p>​        查询指定目录的磁盘占用情况，默认为当前目录</p>
+<p>​            -s 指定目录占用大小汇总</p>
+<p>​            -h 带计量单位</p>
+<p>​            -a 含文件</p>
+<p>​            –max-depth=1  子目录深度</p>
+<p>​            -c 列出明细的同时，增加汇总值</p>
+<p>​        2）应用实例         </p>
+<p>​            查询 /opt 目录的磁盘占用情况，深度为 1    </p>
+<p>​    <img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114111737602.png" alt="image-20220114111737602" style="zoom: 50%;"></p>
+<h5 id="3、磁盘情况-工作实用指令"><a href="#3、磁盘情况-工作实用指令" class="headerlink" title="3、磁盘情况-工作实用指令"></a>3、磁盘情况-工作实用指令</h5><p>​    1）统计/home文件夹下文件的个数        </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l /home | grep &quot;^-&quot; |wc -l</span><br></pre></td></tr></table></figure>
+
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114112125123.png" alt="image-20220114112125123" style="zoom:50%;">
+
+<p>​    2）统计/home 文件夹下目录的个数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l /home | grep &quot;^d&quot; |wc -l</span><br></pre></td></tr></table></figure>
+
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114112310233.png" alt="image-20220114112310233" style="zoom:50%;">
+
+<p>​    3）统计/home 文件夹下文件的个数，包括子文件夹里的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -lR /home |grep &quot;^-&quot; |wc -l</span><br></pre></td></tr></table></figure>
+
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114112531939.png" alt="image-20220114112531939" style="zoom:50%;">
+
+<p>​    4）以树状显示目录结构</p>
+<p>​        <img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114112742085.png" alt="image-20220114112742085" style="zoom:50%;"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/" data-id="ckydvhbkp000330un5hbrhwty" data-title="Linux实战篇（四）- 磁盘" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Linux实战篇(三)" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/" class="article-date">
   <time class="dt-published" datetime="2022-01-13T03:57:03.000Z" itemprop="datePublished">2022-01-13</time>
 </a>
     
@@ -88,7 +241,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2022/01/13/Linux/">Linux(三)</a>
+      <a class="p-name article-title" href="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/">Linux实战篇(三) - 组、权限rwx、任务调度</a>
     </h1>
   
 
@@ -107,35 +260,35 @@
 <li><p> 改变用户所在的组</p>
 </li>
 </ol>
-<img src="/2022/01/13/Linux/image-20220113115813421.png" alt="image-20220113115813421" style="zoom: 50%;">
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113115813421.png" alt="image-20220113115813421" style="zoom: 50%;">
 
 <h4 id="2-文件-目录-所有者"><a href="#2-文件-目录-所有者" class="headerlink" title="2 文件/目录 所有者"></a>2 文件/目录 所有者</h4><p>​    一般为文件的创建者,谁创建了该文件，就自然的成为该文件的所有者。</p>
 <h5 id="2-1-查看文件的所有者"><a href="#2-1-查看文件的所有者" class="headerlink" title="2.1 查看文件的所有者"></a>2.1 查看文件的所有者</h5><p>​    1)  指令：<strong>ls  -ahl</strong></p>
 <p>​    2)  应用实例：创建一个组 police,再创建一个用户 tom1,将 tom1 放在 police 组 ,然后使用 tom 来创建一个文件 ok.txt，看看情况如何</p>
-<img src="/2022/01/13/Linux/image-20220113120216286.png" alt="image-20220113120216286" style="zoom: 50%;">
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113120216286.png" alt="image-20220113120216286" style="zoom: 50%;">
 
 <p>使用tom1账号登录Linux</p>
-<img src="/2022/01/13/Linux/image-20220113120755701.png" alt="image-20220113120755701" style="zoom:50%;">
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113120755701.png" alt="image-20220113120755701" style="zoom:50%;">
 
 
 
 <h5 id="2-2-修改文件所有者"><a href="#2-2-修改文件所有者" class="headerlink" title="2.2    修改文件所有者"></a>2.2    修改文件所有者</h5><p>•  指令：chown 用户名 文件名</p>
 <p>•  应用案例</p>
 <p>要求：使用 root 创建一个文件 apple.txt ，然后将其所有者修改成 tom</p>
-<img src="/2022/01/13/Linux/image-20220113143214132.png" alt="image-20220113143214132" style="zoom: 50%;">
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113143214132.png" alt="image-20220113143214132" style="zoom: 50%;">
 
 
 
 <h5 id="2-3-查看文件-目录所在组"><a href="#2-3-查看文件-目录所在组" class="headerlink" title="2.3    查看文件/目录所在组"></a>2.3    查看文件/目录所在组</h5><p>​    基本指令</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls –ahl</span><br></pre></td></tr></table></figure>
 
-<img src="/2022/01/13/Linux/image-20220113144219416.png" alt="image-20220113144219416" style="zoom:50%;">
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113144219416.png" alt="image-20220113144219416" style="zoom:50%;">
 
 <h5 id="2-4-修改文件所在的组"><a href="#2-4-修改文件所在的组" class="headerlink" title="2.4    修改文件所在的组"></a>2.4    修改文件所在的组</h5><p>•  基本指令</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chgrp 组名 文件名</span><br></pre></td></tr></table></figure>
 
 <p>•  应用实例<br> 使用 root 用户创建文件 orange.txt ,看看当前这个文件属于哪个组，然后将这个文件所在组，修改到 police 组 。</p>
-<img src="/2022/01/13/Linux/image-20220113143859564.png" alt="image-20220113143859564" style="zoom: 50%;">
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113143859564.png" alt="image-20220113143859564" style="zoom: 50%;">
 
 
 
@@ -143,7 +296,7 @@
 <p>​        2）usermod -d 目录名 用户名    改变该用户登录的初始目录</p>
 <p>​      <strong>应用实例：</strong></p>
 <p>​        创建一个土匪组（bandit）将tom这个用户从原来所在的police组，修改到bandit组</p>
-<img src="/2022/01/13/Linux/image-20220113145405857.png" alt="image-20220113145405857" style="zoom:50%;">
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113145405857.png" alt="image-20220113145405857" style="zoom:50%;">
 
 
 
@@ -154,7 +307,7 @@
 <ol>
 <li>第 0 位确定文件类型(d, - , l , c , b)</li>
 </ol>
-<p>​        - ：普通文件     c: 目录     l：软链接      c：字符设备[键盘，鼠标]     b：块文件[硬盘]</p>
+<p>​        - ：普通文件     d: 目录     l：软链接      c：字符设备[键盘，鼠标]     b：块文件[硬盘]</p>
 <ol start="2">
 <li><p>第 1-3 位确定<strong>所有者</strong>（该文件的所有者）拥有该文件的权限。—User</p>
 </li>
@@ -201,13 +354,13 @@
 <p>​        3) chmod   a-x    文件目录名</p>
 <p>​    案例演示</p>
 <p>​    1)  给 abc 文件 的所有者读写执行的权限，给所在组读执行权限，给其它组读执行权限。</p>
-<img src="/2022/01/13/Linux/image-20220113153609433.png" alt="image-20220113153609433" style="zoom:50%;">
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113153609433.png" alt="image-20220113153609433" style="zoom:50%;">
 
 <p>​    2） 给abc 文件的所有者除去执行的权限，增加组写的权限</p>
-<img src="/2022/01/13/Linux/image-20220113153832943.png" alt="image-20220113153832943" style="zoom:50%;">
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113153832943.png" alt="image-20220113153832943" style="zoom:50%;">
 
 <p>​    3）给 abc 文件的所有用户添加读的权限</p>
-<img src="/2022/01/13/Linux/image-20220113154018146.png" alt="image-20220113154018146" style="zoom:50%;">
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113154018146.png" alt="image-20220113154018146" style="zoom:50%;">
 
 <p>​        </p>
 <h5 id="3、-第二种方式：通过数字变更权限"><a href="#3、-第二种方式：通过数字变更权限" class="headerlink" title="3、 第二种方式：通过数字变更权限"></a>3、 第二种方式：通过数字变更权限</h5><p>​            规则：<strong>r=4 w=2 x=1</strong> </p>
@@ -218,7 +371,7 @@
 <p>​            r-x = 4+1=5</p>
 <p>​            r-x = 4+1 =5</p>
 <p>​            指令：<strong>chmod 755 /home/abc.txt</strong></p>
-<img src="/2022/01/13/Linux/image-20220113154756214.png" alt="image-20220113154756214" style="zoom:50%;">
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113154756214.png" alt="image-20220113154756214" style="zoom:50%;">
 
 
 
@@ -226,14 +379,14 @@
 <p>​        chown newowner:newgroup file      改变用户的所有者和所有组</p>
 <p>​        <strong>-R   如果是目录 则使其下所有子文件或目录递归生效</strong></p>
 <h5 id="2、案例"><a href="#2、案例" class="headerlink" title="2、案例"></a>2、案例</h5><p>​        1）请将 /home/kkk 目录下所有的文件和目录的所有者都修改成 tom</p>
-<img src="/2022/01/13/Linux/image-20220113161856606.png" alt="image-20220113161856606" style="zoom:50%;">
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113161856606.png" alt="image-20220113161856606" style="zoom:50%;">
 
 <p>​        2）请将 /home/kkk 目录下所有的文件和目录的所在组都修改成 bandit(土匪) </p>
-<img src="/2022/01/13/Linux/image-20220113162314993.png" alt="image-20220113162314993" style="zoom:50%;">
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113162314993.png" alt="image-20220113162314993" style="zoom:50%;">
 
 
 
-<h3 id="三、Linux任务调度"><a href="#三、Linux任务调度" class="headerlink" title="三、Linux任务调度"></a>三、Linux任务调度</h3><h4 id="1、原理示意图"><a href="#1、原理示意图" class="headerlink" title="1、原理示意图"></a>1、原理示意图</h4><img src="/2022/01/13/Linux/image-20220113165252639.png" alt="image-20220113165252639" style="zoom:50%;">
+<h3 id="三、Linux任务调度"><a href="#三、Linux任务调度" class="headerlink" title="三、Linux任务调度"></a>三、Linux任务调度</h3><h4 id="1、原理示意图"><a href="#1、原理示意图" class="headerlink" title="1、原理示意图"></a>1、原理示意图</h4><img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113165252639.png" alt="image-20220113165252639" style="zoom:50%;">
 
 <h4 id="2、概述"><a href="#2、概述" class="headerlink" title="2、概述"></a>2、概述</h4><p>​    任务调度：是指系统在某个时间执行的特定的命令或程序。</p>
 <p>​    任务调度分类：</p>
@@ -241,28 +394,28 @@
 <p>​            2.个别用户工作：个别用户可能希望执行某些程序，比如对 mysql 数据库的备份。</p>
 <h4 id="3、基本语法"><a href="#3、基本语法" class="headerlink" title="3、基本语法"></a>3、基本语法</h4><p>​        <strong>crontab [选项]</strong></p>
 <p>​        常用选项：</p>
-<p>​        <img src="/2022/01/13/Linux/image-20220113165525877.png" alt="image-20220113165525877" style="zoom:50%;"></p>
+<p>​        <img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113165525877.png" alt="image-20220113165525877" style="zoom:50%;"></p>
 <h4 id="4、快速入门"><a href="#4、快速入门" class="headerlink" title="4、快速入门"></a>4、快速入门</h4><p>​        任务要求</p>
 <p>​        设置任务调度文件：/etc/crontab</p>
 <p>​        设置个人任务调度。执行 crontab –e 命令。接着输入任务到调度文件</p>
 <p>​        如：*/1 * * * * ls –l                  /etc/ &gt; /tmp/to.txt</p>
 <p>​        意思说每小时的每分钟执行 ls –l /etc/ &gt; /tmp/to.txt 命令</p>
 <p>​        1）进入到编辑模式</p>
-<img src="/2022/01/13/Linux/image-20220113170955177.png" alt="image-20220113170955177" style="zoom:50%;">
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113170955177.png" alt="image-20220113170955177" style="zoom:50%;">
 
 <p>​        2）添加一下文件</p>
-<p>​            <img src="/2022/01/13/Linux/image-20220113171039121.png" alt="image-20220113171039121" style="zoom:50%;"></p>
+<p>​            <img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113171039121.png" alt="image-20220113171039121" style="zoom:50%;"></p>
 <p>​        3）效果</p>
 <p>​                是一分钟后在tmp目录下，就会多一个to.txt文件</p>
 <p>​        4）占位符说明        </p>
-<p>​        <img src="/2022/01/13/Linux/image-20220113171308317.png" alt="image-20220113171308317" style="zoom:50%;">        </p>
+<p>​        <img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113171308317.png" alt="image-20220113171308317" style="zoom:50%;">        </p>
 <ul>
 <li>特殊符号说明</li>
 </ul>
-<p>​            <img src="/2022/01/13/Linux/image-20220113171400349.png" alt="image-20220113171400349" style="zoom:50%;"></p>
+<p>​            <img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113171400349.png" alt="image-20220113171400349" style="zoom:50%;"></p>
 <ul>
 <li><p>特定时间执行任务案例</p>
-<img src="/2022/01/13/Linux/image-20220113171522858.png" alt="image-20220113171522858" style="zoom:50%;"></li>
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113171522858.png" alt="image-20220113171522858" style="zoom:50%;"></li>
 </ul>
 <h4 id="5、任务调度的应用实例"><a href="#5、任务调度的应用实例" class="headerlink" title="5、任务调度的应用实例"></a>5、任务调度的应用实例</h4><h5 id="1、案例1"><a href="#1、案例1" class="headerlink" title="1、案例1"></a>1、案例1</h5><p>每隔1分钟，就将当前的日期信息追加到/tmp/mydate文件中</p>
 <p>​        1）先编写一个文件 /home/mytask1.sh</p>
@@ -278,7 +431,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/01/13/Linux/" data-id="ckycsrvq100029wunh82y20km" data-title="Linux(三)" class="article-share-link">分享</a>
+      <a data-url="http://example.com/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/" data-id="ckydvhbkk000130unge950xds" data-title="Linux实战篇(三) - 组、权限rwx、任务调度" class="article-share-link">分享</a>
       
       
       
@@ -363,7 +516,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/01/11/%E5%A6%82%E4%BD%95%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8F%E4%BB%A3%E7%A0%81/" data-id="ckycsrvpy00019wun3y1u9xp6" data-title="如何写高质量代码" class="article-share-link">分享</a>
+      <a data-url="http://example.com/2022/01/11/%E5%A6%82%E4%BD%95%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8F%E4%BB%A3%E7%A0%81/" data-id="ckydvhbkq000430un8kq17yba" data-title="如何写高质量代码" class="article-share-link">分享</a>
       
       
       
@@ -406,7 +559,15 @@
       <ul>
         
           <li>
-            <a href="/2022/01/13/Linux/">Linux(三)</a>
+            <a href="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/">Linux实战篇(五) - 网络配置</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/">Linux实战篇（四）- 磁盘</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/">Linux实战篇(三) - 组、权限rwx、任务调度</a>
           </li>
         
           <li>

@@ -4,41 +4,41 @@
   <meta charset="utf-8">
   
   
-  <title>Linux(三) | 让自己变得优秀起来</title>
+  <title>Linux实战篇(三) - 组、权限rwx、任务调度 | 让自己变得优秀起来</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="一、组管理1 Linux组基本介绍​        在 linux 中的每个用户必须属于一个组，不能独立于组外。在 linux 中每个文件有所有者、所在组、其它组的概念。   所有者   所在组   其它组   改变用户所在的组     2 文件&#x2F;目录 所有者​    一般为文件的创建者,谁创建了该文件，就自然的成为该文件的所有者。 2.1 查看文件的所有者​    1)  指令：ls  -ahl">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux(三)">
-<meta property="og:url" content="http://example.com/2022/01/13/Linux/index.html">
+<meta property="og:title" content="Linux实战篇(三) - 组、权限rwx、任务调度">
+<meta property="og:url" content="http://example.com/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/index.html">
 <meta property="og:site_name" content="让自己变得优秀起来">
 <meta property="og:description" content="一、组管理1 Linux组基本介绍​        在 linux 中的每个用户必须属于一个组，不能独立于组外。在 linux 中每个文件有所有者、所在组、其它组的概念。   所有者   所在组   其它组   改变用户所在的组     2 文件&#x2F;目录 所有者​    一般为文件的创建者,谁创建了该文件，就自然的成为该文件的所有者。 2.1 查看文件的所有者​    1)  指令：ls  -ahl">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2022/01/13/Linux/image-20220113115813421.png">
-<meta property="og:image" content="http://example.com/2022/01/13/Linux/image-20220113120216286.png">
-<meta property="og:image" content="http://example.com/2022/01/13/Linux/image-20220113120755701.png">
-<meta property="og:image" content="http://example.com/2022/01/13/Linux/image-20220113143214132.png">
-<meta property="og:image" content="http://example.com/2022/01/13/Linux/image-20220113144219416.png">
-<meta property="og:image" content="http://example.com/2022/01/13/Linux/image-20220113143859564.png">
-<meta property="og:image" content="http://example.com/2022/01/13/Linux/image-20220113145405857.png">
-<meta property="og:image" content="http://example.com/2022/01/13/Linux/image-20220113153609433.png">
-<meta property="og:image" content="http://example.com/2022/01/13/Linux/image-20220113153832943.png">
-<meta property="og:image" content="http://example.com/2022/01/13/Linux/image-20220113154018146.png">
-<meta property="og:image" content="http://example.com/2022/01/13/Linux/image-20220113154756214.png">
-<meta property="og:image" content="http://example.com/2022/01/13/Linux/image-20220113161856606.png">
-<meta property="og:image" content="http://example.com/2022/01/13/Linux/image-20220113162314993.png">
-<meta property="og:image" content="http://example.com/2022/01/13/Linux/image-20220113165252639.png">
-<meta property="og:image" content="http://example.com/2022/01/13/Linux/image-20220113165525877.png">
-<meta property="og:image" content="http://example.com/2022/01/13/Linux/image-20220113170955177.png">
-<meta property="og:image" content="http://example.com/2022/01/13/Linux/image-20220113171039121.png">
-<meta property="og:image" content="http://example.com/2022/01/13/Linux/image-20220113171308317.png">
-<meta property="og:image" content="http://example.com/2022/01/13/Linux/image-20220113171400349.png">
-<meta property="og:image" content="http://example.com/2022/01/13/Linux/image-20220113171522858.png">
+<meta property="og:image" content="http://example.com/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113115813421.png">
+<meta property="og:image" content="http://example.com/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113120216286.png">
+<meta property="og:image" content="http://example.com/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113120755701.png">
+<meta property="og:image" content="http://example.com/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113143214132.png">
+<meta property="og:image" content="http://example.com/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113144219416.png">
+<meta property="og:image" content="http://example.com/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113143859564.png">
+<meta property="og:image" content="http://example.com/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113145405857.png">
+<meta property="og:image" content="http://example.com/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113153609433.png">
+<meta property="og:image" content="http://example.com/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113153832943.png">
+<meta property="og:image" content="http://example.com/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113154018146.png">
+<meta property="og:image" content="http://example.com/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113154756214.png">
+<meta property="og:image" content="http://example.com/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113161856606.png">
+<meta property="og:image" content="http://example.com/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113162314993.png">
+<meta property="og:image" content="http://example.com/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113165252639.png">
+<meta property="og:image" content="http://example.com/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113165525877.png">
+<meta property="og:image" content="http://example.com/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113170955177.png">
+<meta property="og:image" content="http://example.com/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113171039121.png">
+<meta property="og:image" content="http://example.com/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113171308317.png">
+<meta property="og:image" content="http://example.com/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113171400349.png">
+<meta property="og:image" content="http://example.com/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113171522858.png">
 <meta property="article:published_time" content="2022-01-13T03:57:03.000Z">
-<meta property="article:modified_time" content="2022-01-13T09:52:47.301Z">
+<meta property="article:modified_time" content="2022-01-14T03:31:50.444Z">
 <meta property="article:author" content="Mr.chen">
 <meta property="article:tag" content="后端博客">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2022/01/13/Linux/image-20220113115813421.png">
+<meta name="twitter:image" content="http://example.com/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113115813421.png">
   
     <link rel="alternate" href="/atom.xml" title="让自己变得优秀起来" type="application/atom+xml">
   
@@ -95,9 +95,9 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-Linux" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-Linux实战篇(三)" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2022/01/13/Linux/" class="article-date">
+    <a href="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/" class="article-date">
   <time class="dt-published" datetime="2022-01-13T03:57:03.000Z" itemprop="datePublished">2022-01-13</time>
 </a>
     
@@ -109,7 +109,7 @@
         
   
     <h1 class="p-name article-title" itemprop="headline name">
-      Linux(三)
+      Linux实战篇(三) - 组、权限rwx、任务调度
     </h1>
   
 
@@ -128,35 +128,35 @@
 <li><p> 改变用户所在的组</p>
 </li>
 </ol>
-<img src="/2022/01/13/Linux/image-20220113115813421.png" alt="image-20220113115813421" style="zoom: 50%;">
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113115813421.png" alt="image-20220113115813421" style="zoom: 50%;">
 
 <h4 id="2-文件-目录-所有者"><a href="#2-文件-目录-所有者" class="headerlink" title="2 文件/目录 所有者"></a>2 文件/目录 所有者</h4><p>​    一般为文件的创建者,谁创建了该文件，就自然的成为该文件的所有者。</p>
 <h5 id="2-1-查看文件的所有者"><a href="#2-1-查看文件的所有者" class="headerlink" title="2.1 查看文件的所有者"></a>2.1 查看文件的所有者</h5><p>​    1)  指令：<strong>ls  -ahl</strong></p>
 <p>​    2)  应用实例：创建一个组 police,再创建一个用户 tom1,将 tom1 放在 police 组 ,然后使用 tom 来创建一个文件 ok.txt，看看情况如何</p>
-<img src="/2022/01/13/Linux/image-20220113120216286.png" alt="image-20220113120216286" style="zoom: 50%;">
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113120216286.png" alt="image-20220113120216286" style="zoom: 50%;">
 
 <p>使用tom1账号登录Linux</p>
-<img src="/2022/01/13/Linux/image-20220113120755701.png" alt="image-20220113120755701" style="zoom:50%;">
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113120755701.png" alt="image-20220113120755701" style="zoom:50%;">
 
 
 
 <h5 id="2-2-修改文件所有者"><a href="#2-2-修改文件所有者" class="headerlink" title="2.2    修改文件所有者"></a>2.2    修改文件所有者</h5><p>•  指令：chown 用户名 文件名</p>
 <p>•  应用案例</p>
 <p>要求：使用 root 创建一个文件 apple.txt ，然后将其所有者修改成 tom</p>
-<img src="/2022/01/13/Linux/image-20220113143214132.png" alt="image-20220113143214132" style="zoom: 50%;">
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113143214132.png" alt="image-20220113143214132" style="zoom: 50%;">
 
 
 
 <h5 id="2-3-查看文件-目录所在组"><a href="#2-3-查看文件-目录所在组" class="headerlink" title="2.3    查看文件/目录所在组"></a>2.3    查看文件/目录所在组</h5><p>​    基本指令</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls –ahl</span><br></pre></td></tr></table></figure>
 
-<img src="/2022/01/13/Linux/image-20220113144219416.png" alt="image-20220113144219416" style="zoom:50%;">
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113144219416.png" alt="image-20220113144219416" style="zoom:50%;">
 
 <h5 id="2-4-修改文件所在的组"><a href="#2-4-修改文件所在的组" class="headerlink" title="2.4    修改文件所在的组"></a>2.4    修改文件所在的组</h5><p>•  基本指令</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chgrp 组名 文件名</span><br></pre></td></tr></table></figure>
 
 <p>•  应用实例<br> 使用 root 用户创建文件 orange.txt ,看看当前这个文件属于哪个组，然后将这个文件所在组，修改到 police 组 。</p>
-<img src="/2022/01/13/Linux/image-20220113143859564.png" alt="image-20220113143859564" style="zoom: 50%;">
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113143859564.png" alt="image-20220113143859564" style="zoom: 50%;">
 
 
 
@@ -164,7 +164,7 @@
 <p>​        2）usermod -d 目录名 用户名    改变该用户登录的初始目录</p>
 <p>​      <strong>应用实例：</strong></p>
 <p>​        创建一个土匪组（bandit）将tom这个用户从原来所在的police组，修改到bandit组</p>
-<img src="/2022/01/13/Linux/image-20220113145405857.png" alt="image-20220113145405857" style="zoom:50%;">
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113145405857.png" alt="image-20220113145405857" style="zoom:50%;">
 
 
 
@@ -175,7 +175,7 @@
 <ol>
 <li>第 0 位确定文件类型(d, - , l , c , b)</li>
 </ol>
-<p>​        - ：普通文件     c: 目录     l：软链接      c：字符设备[键盘，鼠标]     b：块文件[硬盘]</p>
+<p>​        - ：普通文件     d: 目录     l：软链接      c：字符设备[键盘，鼠标]     b：块文件[硬盘]</p>
 <ol start="2">
 <li><p>第 1-3 位确定<strong>所有者</strong>（该文件的所有者）拥有该文件的权限。—User</p>
 </li>
@@ -222,13 +222,13 @@
 <p>​        3) chmod   a-x    文件目录名</p>
 <p>​    案例演示</p>
 <p>​    1)  给 abc 文件 的所有者读写执行的权限，给所在组读执行权限，给其它组读执行权限。</p>
-<img src="/2022/01/13/Linux/image-20220113153609433.png" alt="image-20220113153609433" style="zoom:50%;">
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113153609433.png" alt="image-20220113153609433" style="zoom:50%;">
 
 <p>​    2） 给abc 文件的所有者除去执行的权限，增加组写的权限</p>
-<img src="/2022/01/13/Linux/image-20220113153832943.png" alt="image-20220113153832943" style="zoom:50%;">
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113153832943.png" alt="image-20220113153832943" style="zoom:50%;">
 
 <p>​    3）给 abc 文件的所有用户添加读的权限</p>
-<img src="/2022/01/13/Linux/image-20220113154018146.png" alt="image-20220113154018146" style="zoom:50%;">
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113154018146.png" alt="image-20220113154018146" style="zoom:50%;">
 
 <p>​        </p>
 <h5 id="3、-第二种方式：通过数字变更权限"><a href="#3、-第二种方式：通过数字变更权限" class="headerlink" title="3、 第二种方式：通过数字变更权限"></a>3、 第二种方式：通过数字变更权限</h5><p>​            规则：<strong>r=4 w=2 x=1</strong> </p>
@@ -239,7 +239,7 @@
 <p>​            r-x = 4+1=5</p>
 <p>​            r-x = 4+1 =5</p>
 <p>​            指令：<strong>chmod 755 /home/abc.txt</strong></p>
-<img src="/2022/01/13/Linux/image-20220113154756214.png" alt="image-20220113154756214" style="zoom:50%;">
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113154756214.png" alt="image-20220113154756214" style="zoom:50%;">
 
 
 
@@ -247,14 +247,14 @@
 <p>​        chown newowner:newgroup file      改变用户的所有者和所有组</p>
 <p>​        <strong>-R   如果是目录 则使其下所有子文件或目录递归生效</strong></p>
 <h5 id="2、案例"><a href="#2、案例" class="headerlink" title="2、案例"></a>2、案例</h5><p>​        1）请将 /home/kkk 目录下所有的文件和目录的所有者都修改成 tom</p>
-<img src="/2022/01/13/Linux/image-20220113161856606.png" alt="image-20220113161856606" style="zoom:50%;">
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113161856606.png" alt="image-20220113161856606" style="zoom:50%;">
 
 <p>​        2）请将 /home/kkk 目录下所有的文件和目录的所在组都修改成 bandit(土匪) </p>
-<img src="/2022/01/13/Linux/image-20220113162314993.png" alt="image-20220113162314993" style="zoom:50%;">
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113162314993.png" alt="image-20220113162314993" style="zoom:50%;">
 
 
 
-<h3 id="三、Linux任务调度"><a href="#三、Linux任务调度" class="headerlink" title="三、Linux任务调度"></a>三、Linux任务调度</h3><h4 id="1、原理示意图"><a href="#1、原理示意图" class="headerlink" title="1、原理示意图"></a>1、原理示意图</h4><img src="/2022/01/13/Linux/image-20220113165252639.png" alt="image-20220113165252639" style="zoom:50%;">
+<h3 id="三、Linux任务调度"><a href="#三、Linux任务调度" class="headerlink" title="三、Linux任务调度"></a>三、Linux任务调度</h3><h4 id="1、原理示意图"><a href="#1、原理示意图" class="headerlink" title="1、原理示意图"></a>1、原理示意图</h4><img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113165252639.png" alt="image-20220113165252639" style="zoom:50%;">
 
 <h4 id="2、概述"><a href="#2、概述" class="headerlink" title="2、概述"></a>2、概述</h4><p>​    任务调度：是指系统在某个时间执行的特定的命令或程序。</p>
 <p>​    任务调度分类：</p>
@@ -262,28 +262,28 @@
 <p>​            2.个别用户工作：个别用户可能希望执行某些程序，比如对 mysql 数据库的备份。</p>
 <h4 id="3、基本语法"><a href="#3、基本语法" class="headerlink" title="3、基本语法"></a>3、基本语法</h4><p>​        <strong>crontab [选项]</strong></p>
 <p>​        常用选项：</p>
-<p>​        <img src="/2022/01/13/Linux/image-20220113165525877.png" alt="image-20220113165525877" style="zoom:50%;"></p>
+<p>​        <img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113165525877.png" alt="image-20220113165525877" style="zoom:50%;"></p>
 <h4 id="4、快速入门"><a href="#4、快速入门" class="headerlink" title="4、快速入门"></a>4、快速入门</h4><p>​        任务要求</p>
 <p>​        设置任务调度文件：/etc/crontab</p>
 <p>​        设置个人任务调度。执行 crontab –e 命令。接着输入任务到调度文件</p>
 <p>​        如：*/1 * * * * ls –l                  /etc/ &gt; /tmp/to.txt</p>
 <p>​        意思说每小时的每分钟执行 ls –l /etc/ &gt; /tmp/to.txt 命令</p>
 <p>​        1）进入到编辑模式</p>
-<img src="/2022/01/13/Linux/image-20220113170955177.png" alt="image-20220113170955177" style="zoom:50%;">
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113170955177.png" alt="image-20220113170955177" style="zoom:50%;">
 
 <p>​        2）添加一下文件</p>
-<p>​            <img src="/2022/01/13/Linux/image-20220113171039121.png" alt="image-20220113171039121" style="zoom:50%;"></p>
+<p>​            <img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113171039121.png" alt="image-20220113171039121" style="zoom:50%;"></p>
 <p>​        3）效果</p>
 <p>​                是一分钟后在tmp目录下，就会多一个to.txt文件</p>
 <p>​        4）占位符说明        </p>
-<p>​        <img src="/2022/01/13/Linux/image-20220113171308317.png" alt="image-20220113171308317" style="zoom:50%;">        </p>
+<p>​        <img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113171308317.png" alt="image-20220113171308317" style="zoom:50%;">        </p>
 <ul>
 <li>特殊符号说明</li>
 </ul>
-<p>​            <img src="/2022/01/13/Linux/image-20220113171400349.png" alt="image-20220113171400349" style="zoom:50%;"></p>
+<p>​            <img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113171400349.png" alt="image-20220113171400349" style="zoom:50%;"></p>
 <ul>
 <li><p>特定时间执行任务案例</p>
-<img src="/2022/01/13/Linux/image-20220113171522858.png" alt="image-20220113171522858" style="zoom:50%;"></li>
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113171522858.png" alt="image-20220113171522858" style="zoom:50%;"></li>
 </ul>
 <h4 id="5、任务调度的应用实例"><a href="#5、任务调度的应用实例" class="headerlink" title="5、任务调度的应用实例"></a>5、任务调度的应用实例</h4><h5 id="1、案例1"><a href="#1、案例1" class="headerlink" title="1、案例1"></a>1、案例1</h5><p>每隔1分钟，就将当前的日期信息追加到/tmp/mydate文件中</p>
 <p>​        1）先编写一个文件 /home/mytask1.sh</p>
@@ -299,7 +299,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/01/13/Linux/" data-id="ckycsrvq100029wunh82y20km" data-title="Linux(三)" class="article-share-link">分享</a>
+      <a data-url="http://example.com/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/" data-id="ckydvhbkk000130unge950xds" data-title="Linux实战篇(三) - 组、权限rwx、任务调度" class="article-share-link">分享</a>
       
       
       
@@ -308,6 +308,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          Linux实战篇（四）- 磁盘
+        
+      </div>
+    </a>
   
   
     <a href="/2022/01/11/%E5%A6%82%E4%BD%95%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8F%E4%BB%A3%E7%A0%81/" id="article-nav-older" class="article-nav-link-wrap">
@@ -350,7 +359,15 @@
       <ul>
         
           <li>
-            <a href="/2022/01/13/Linux/">Linux(三)</a>
+            <a href="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/">Linux实战篇(五) - 网络配置</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/">Linux实战篇（四）- 磁盘</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/">Linux实战篇(三) - 组、权限rwx、任务调度</a>
           </li>
         
           <li>

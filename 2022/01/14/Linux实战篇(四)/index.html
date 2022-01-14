@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Linux实战篇（四）- 磁盘 | 让自己变得优秀起来</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="一、Linux磁盘分区1、原理介绍​    1) Linux 来说无论有几个分区，分给哪一目录使用，它归根结底就只有一个根目录，一个独立且唯一的文件结构 , Linux 中每个分区都是用来组成整个文件系统的一部分。 ​    2) Linux 采用了一种叫“载入”的处理方法，它的整个文件系统中包含了一整套的文件和目录， 且将一个分区和一个目录联系起来。这时要载入的一个分区将使它的存储空间在一个目录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux实战篇（四）- 磁盘">
+<meta property="og:url" content="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/index.html">
+<meta property="og:site_name" content="让自己变得优秀起来">
+<meta property="og:description" content="一、Linux磁盘分区1、原理介绍​    1) Linux 来说无论有几个分区，分给哪一目录使用，它归根结底就只有一个根目录，一个独立且唯一的文件结构 , Linux 中每个分区都是用来组成整个文件系统的一部分。 ​    2) Linux 采用了一种叫“载入”的处理方法，它的整个文件系统中包含了一整套的文件和目录， 且将一个分区和一个目录联系起来。这时要载入的一个分区将使它的存储空间在一个目录">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114101732404.png">
+<meta property="og:image" content="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114101659455.png">
+<meta property="og:image" content="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114102620885.png">
+<meta property="og:image" content="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114104221617.png">
+<meta property="og:image" content="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114110209700.png">
+<meta property="og:image" content="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114110314088.png">
+<meta property="og:image" content="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114111252847.png">
+<meta property="og:image" content="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114111737602.png">
+<meta property="og:image" content="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114112125123.png">
+<meta property="og:image" content="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114112310233.png">
+<meta property="og:image" content="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114112531939.png">
+<meta property="og:image" content="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114112742085.png">
+<meta property="article:published_time" content="2022-01-14T01:53:53.000Z">
+<meta property="article:modified_time" content="2022-01-14T03:32:25.666Z">
+<meta property="article:author" content="Mr.chen">
+<meta property="article:tag" content="后端博客">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114101732404.png">
+  
+    <link rel="alternate" href="/atom.xml" title="让自己变得优秀起来" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">让自己变得优秀起来</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Linux实战篇(四)" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/" class="article-date">
+  <time class="dt-published" datetime="2022-01-14T01:53:53.000Z" itemprop="datePublished">2022-01-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Linux实战篇（四）- 磁盘
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="一、Linux磁盘分区"><a href="#一、Linux磁盘分区" class="headerlink" title="一、Linux磁盘分区"></a>一、Linux磁盘分区</h3><h4 id="1、原理介绍"><a href="#1、原理介绍" class="headerlink" title="1、原理介绍"></a>1、原理介绍</h4><p>​    1) Linux 来说无论有几个分区，分给哪一目录使用，它归根结底就只有一个根目录，一个独立且唯一的文件结构 , Linux 中每个分区都是用来组成整个文件系统的一部分。</p>
+<p>​    2) Linux 采用了一种叫“载入”的处理方法，它的整个文件系统中包含了一整套的文件和目录， 且将一个分区和一个目录联系起来。这时要载入的一个分区将使它的存储空间在一个目录下获得。</p>
+<h4 id="2、示意图"><a href="#2、示意图" class="headerlink" title="2、示意图"></a>2、示意图</h4><p>​    <img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114101732404.png" alt="image-20220114101732404" style="zoom:50%;"></p>
+<h4 id="3、硬盘说明"><a href="#3、硬盘说明" class="headerlink" title="3、硬盘说明"></a>3、硬盘说明</h4><p>​    1) Linux 硬盘分 <strong>IDE 硬盘和 SCSI 硬盘</strong>，目前基本上是 <strong>SCSI 硬盘</strong></p>
+<p>​    2) 对于 IDE 硬盘，驱动器标识符为“hdx<del>”,其中“hd”表明分区所在设备的类型，这里是指 IDE 硬盘了。“x”为盘号（a 为基本盘，b 为基本从属盘，c 为辅助主盘，d 为辅助从属盘）,“</del>”代表分区，前四个分区用数字 1 到 4 表示，它们是主分区或扩展分区，从 5 开始就是逻辑分区。例，hda3 表示为第一个 IDE 硬盘上的第三个主分区或扩展分区,hdb2 表示为第二个 IDE 硬盘上的第二个主分区或扩展分区。</p>
+<p>​    3) <strong>对于 SCSI 硬盘则标识为“sdx~”，SCSI 硬盘是用“sd”来表示分区所在设备的类型的，其余则和 IDE 硬盘的表示方法一样。</strong></p>
+<p>​    4) 使用 <strong>lsblk 指令</strong>查看当前系统的分区情况</p>
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114101659455.png" alt="image-20220114101659455">
+
+
+
+<h4 id="4、挂载的经典案例"><a href="#4、挂载的经典案例" class="headerlink" title="4、挂载的经典案例"></a>4、挂载的经典案例</h4><h5 id="1、需求说明"><a href="#1、需求说明" class="headerlink" title="1、需求说明"></a>1、需求说明</h5><pre><code> 1、需求是给我们的 Linux 系统增加一个新的硬盘，并且挂载到/home/newdisk
+</code></pre>
+<h5 id><a href="#" class="headerlink" title></a><img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114102620885.png" alt="image-20220114102620885" style="zoom: 50%;"></h5><h5 id="2、具体步骤"><a href="#2、具体步骤" class="headerlink" title="2、具体步骤"></a>2、具体步骤</h5><p>​    <strong>1）虚拟机增加硬盘步骤</strong></p>
+<p>​         在【虚拟机】菜单中，选择【设置】，然后设备列表里添加硬盘，然后一路【下一步】，中间只有选择磁盘大小的地方需要修改，至到完成。然后重启系统（才能识别）！</p>
+<p>​        <img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114104221617.png" alt="image-20220114104221617" style="zoom:50%;"></p>
+<p>​    <strong>2）虚拟机增加硬盘步骤 2</strong></p>
+<p>​        分区命令   fdisk   /dev/sdb</p>
+<p>​        开始对/sdb 分区</p>
+<p>​            •      m  显示命令列表</p>
+<p>​            •      p   显示磁盘分区 同 fdisk  –l</p>
+<p>​            •      n  新增分区</p>
+<p>​            •       d 删除分区</p>
+<p>​            •      w  写入并退出</p>
+<p>说明： 开始分区后输入 n，新增分区，然后选择 p ，分区类型为主分区。两次回车默认剩余全部空间。最后输入 w 写入分区并退出，若不保存退出输入 q。</p>
+<p>​    <strong>3）虚拟机增加硬盘步骤 3</strong></p>
+<p>​        格式化磁盘</p>
+<p>​            分区命令:mkfs -t  ext4   /dev/sdb1</p>
+<p>​            其中 ext4 是分区类型</p>
+<p>​    <strong>4）虚拟机增加硬盘步骤 4</strong></p>
+<p>挂载: 将一个分区与一个目录联系起来，</p>
+<p>​    •  mount     设备名称 挂载目录</p>
+<p>​    •  例如：  mount           /dev/sdb1 /newdisk</p>
+<p>​    •  umount          设备名称  或者  挂载目录</p>
+<p>​    •   例如：    umount /dev/sdb1 或 者  umount /newdisk</p>
+<p>​    <strong>5)  虚拟机增加硬盘步骤 5</strong></p>
+<p>​         永久挂载: 通过修改/etc/fstab 实现挂载添加完成后  执行 <strong>mount –a</strong> 即刻生效</p>
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114110209700.png" alt="image-20220114110209700" style="zoom:50%;">
+
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114110314088.png" alt="image-20220114110314088" style="zoom:50%;">
+
+
+
+<h4 id="5、磁盘情况查询"><a href="#5、磁盘情况查询" class="headerlink" title="5、磁盘情况查询"></a>5、磁盘情况查询</h4><h5 id="1、查询系统整体磁盘使用情况"><a href="#1、查询系统整体磁盘使用情况" class="headerlink" title="1、查询系统整体磁盘使用情况"></a>1、查询系统整体磁盘使用情况</h5><p>​            基本语法：<strong>df -h</strong></p>
+<p>​            应用实例</p>
+<pre><code>           查询系统整体磁盘使用情况
+</code></pre>
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114111252847.png" alt="image-20220114111252847" style="zoom:50%;">
+
+<h5 id="2、查询指定目录的磁盘占用情况"><a href="#2、查询指定目录的磁盘占用情况" class="headerlink" title="2、查询指定目录的磁盘占用情况"></a>2、查询指定目录的磁盘占用情况</h5><p>​        1）基本语法</p>
+<p>​            du -h  /目录</p>
+<p>​        查询指定目录的磁盘占用情况，默认为当前目录</p>
+<p>​            -s 指定目录占用大小汇总</p>
+<p>​            -h 带计量单位</p>
+<p>​            -a 含文件</p>
+<p>​            –max-depth=1  子目录深度</p>
+<p>​            -c 列出明细的同时，增加汇总值</p>
+<p>​        2）应用实例         </p>
+<p>​            查询 /opt 目录的磁盘占用情况，深度为 1    </p>
+<p>​    <img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114111737602.png" alt="image-20220114111737602" style="zoom: 50%;"></p>
+<h5 id="3、磁盘情况-工作实用指令"><a href="#3、磁盘情况-工作实用指令" class="headerlink" title="3、磁盘情况-工作实用指令"></a>3、磁盘情况-工作实用指令</h5><p>​    1）统计/home文件夹下文件的个数        </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l /home | grep &quot;^-&quot; |wc -l</span><br></pre></td></tr></table></figure>
+
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114112125123.png" alt="image-20220114112125123" style="zoom:50%;">
+
+<p>​    2）统计/home 文件夹下目录的个数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l /home | grep &quot;^d&quot; |wc -l</span><br></pre></td></tr></table></figure>
+
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114112310233.png" alt="image-20220114112310233" style="zoom:50%;">
+
+<p>​    3）统计/home 文件夹下文件的个数，包括子文件夹里的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -lR /home |grep &quot;^-&quot; |wc -l</span><br></pre></td></tr></table></figure>
+
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114112531939.png" alt="image-20220114112531939" style="zoom:50%;">
+
+<p>​    4）以树状显示目录结构</p>
+<p>​        <img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114112742085.png" alt="image-20220114112742085" style="zoom:50%;"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/" data-id="ckydvhbkp000330un5hbrhwty" data-title="Linux实战篇（四）- 磁盘" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          Linux实战篇(五) - 网络配置
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">Linux实战篇(三) - 组、权限rwx、任务调度</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/">Linux实战篇(五) - 网络配置</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/">Linux实战篇（四）- 磁盘</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/">Linux实战篇(三) - 组、权限rwx、任务调度</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/11/%E5%A6%82%E4%BD%95%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8F%E4%BB%A3%E7%A0%81/">如何写高质量代码</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 Mr.chen<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
