@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Linux实战篇(三) - 组、权限rwx、任务调度</title>
+    <url>/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/</url>
+    <content><![CDATA[<h3 id="一、组管理"><a href="#一、组管理" class="headerlink" title="一、组管理"></a>一、组管理</h3><h4 id="1-Linux组基本介绍"><a href="#1-Linux组基本介绍" class="headerlink" title="1 Linux组基本介绍"></a>1 Linux组基本介绍</h4><p>​        在 linux 中的每个用户必须属于一个组，不能独立于组外。在 linux 中每个文件有所有者、所在组、其它组的概念。</p>
+<ol>
+<li><p> 所有者</p>
+</li>
+<li><p> 所在组</p>
+</li>
+<li><p> 其它组</p>
+</li>
+<li><p> 改变用户所在的组</p>
+</li>
+</ol>
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113115813421.png" alt="image-20220113115813421" style="zoom: 50%;">
+
+<h4 id="2-文件-目录-所有者"><a href="#2-文件-目录-所有者" class="headerlink" title="2 文件/目录 所有者"></a>2 文件/目录 所有者</h4><p>​    一般为文件的创建者,谁创建了该文件，就自然的成为该文件的所有者。</p>
+<h5 id="2-1-查看文件的所有者"><a href="#2-1-查看文件的所有者" class="headerlink" title="2.1 查看文件的所有者"></a>2.1 查看文件的所有者</h5><p>​    1)  指令：<strong>ls  -ahl</strong></p>
+<p>​    2)  应用实例：创建一个组 police,再创建一个用户 tom1,将 tom1 放在 police 组 ,然后使用 tom 来创建一个文件 ok.txt，看看情况如何</p>
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113120216286.png" alt="image-20220113120216286" style="zoom: 50%;">
+
+<p>使用tom1账号登录Linux</p>
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113120755701.png" alt="image-20220113120755701" style="zoom:50%;">
+
+
+
+<h5 id="2-2-修改文件所有者"><a href="#2-2-修改文件所有者" class="headerlink" title="2.2    修改文件所有者"></a>2.2    修改文件所有者</h5><p>•  指令：chown 用户名 文件名</p>
+<p>•  应用案例</p>
+<p>要求：使用 root 创建一个文件 apple.txt ，然后将其所有者修改成 tom</p>
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113143214132.png" alt="image-20220113143214132" style="zoom: 50%;">
+
+
+
+<h5 id="2-3-查看文件-目录所在组"><a href="#2-3-查看文件-目录所在组" class="headerlink" title="2.3    查看文件/目录所在组"></a>2.3    查看文件/目录所在组</h5><p>​    基本指令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ls –ahl</span><br></pre></td></tr></table></figure>
+
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113144219416.png" alt="image-20220113144219416" style="zoom:50%;">
+
+<h5 id="2-4-修改文件所在的组"><a href="#2-4-修改文件所在的组" class="headerlink" title="2.4    修改文件所在的组"></a>2.4    修改文件所在的组</h5><p>•  基本指令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">chgrp 组名 文件名</span><br></pre></td></tr></table></figure>
+
+<p>•  应用实例<br> 使用 root 用户创建文件 orange.txt ,看看当前这个文件属于哪个组，然后将这个文件所在组，修改到 police 组 。</p>
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113143859564.png" alt="image-20220113143859564" style="zoom: 50%;">
+
+
+
+<h5 id="2-5-改变用户所在组"><a href="#2-5-改变用户所在组" class="headerlink" title="2.5    改变用户所在组"></a>2.5    改变用户所在组</h5><p>​        1)  <strong>usermod   –g    组名   用户名</strong></p>
+<p>​        2）usermod -d 目录名 用户名    改变该用户登录的初始目录</p>
+<p>​      <strong>应用实例：</strong></p>
+<p>​        创建一个土匪组（bandit）将tom这个用户从原来所在的police组，修改到bandit组</p>
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113145405857.png" alt="image-20220113145405857" style="zoom:50%;">
+
+
+
+<h3 id="二、权限详解"><a href="#二、权限详解" class="headerlink" title="二、权限详解"></a>二、权限详解</h3><h4 id="1、权限的基本介绍"><a href="#1、权限的基本介绍" class="headerlink" title="1、权限的基本介绍"></a>1、权限的基本介绍</h4><p>​    ls -l 显示的内容如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-rw-r--r--. 1 tom bandit 0 Jan 13 19:42 ok.txt</span><br></pre></td></tr></table></figure>
+
+<p>0-9 位说明</p>
+<ol>
+<li>第 0 位确定文件类型(d, - , l , c , b)</li>
+</ol>
+<p>​        - ：普通文件     d: 目录     l：软链接      c：字符设备[键盘，鼠标]     b：块文件[硬盘]</p>
+<ol start="2">
+<li><p>第 1-3 位确定<strong>所有者</strong>（该文件的所有者）拥有该文件的权限。—User</p>
+</li>
+<li><p>第 4-6 位确定<strong>所属组</strong>（同用户组的）拥有该文件的权限，—Group</p>
+</li>
+<li><p>第 7-9 位确定其他用户拥有该文件的权限 —Other</p>
+</li>
+</ol>
+<p>5）第10位 如果是文件，表示硬链接的数，如果是目录则表示该目录的子目录个数</p>
+<h4 id="2、rwx权限详解"><a href="#2、rwx权限详解" class="headerlink" title="2、rwx权限详解"></a>2、rwx权限详解</h4><h5 id="2-1-rwx-作用到文件"><a href="#2-1-rwx-作用到文件" class="headerlink" title="2.1 rwx 作用到文件"></a>2.1 rwx 作用到文件</h5><ol>
+<li><p> [ r ]代表可读(read): 可以读取,查看</p>
+</li>
+<li><p> [ w ]代表可写(write): 可以修改,但是不代表可以删除该文件,删除一个文件的前提条件是对该文件所在的目录有写权限，才能删除该文件.</p>
+</li>
+<li><p> [ x ]代表可执行(execute):可以被执行</p>
+</li>
+</ol>
+<h5 id="2-2-rwx-作用到目录"><a href="#2-2-rwx-作用到目录" class="headerlink" title="2.2  rwx 作用到目录"></a>2.2  rwx 作用到目录</h5><ol>
+<li><p>[ r ]代表可读(read): 可以读取，ls 查看目录内容</p>
+</li>
+<li><p>[ w ]代表可写(write): 可以修改,目录内创建+删除+重命名目录</p>
+</li>
+<li><p>[ x ]代表可执行(execute):可以进入该目录</p>
+</li>
+</ol>
+<h5 id="2-3-文件及目录权限实际案例【必须记住】"><a href="#2-3-文件及目录权限实际案例【必须记住】" class="headerlink" title="2.3 文件及目录权限实际案例【必须记住】"></a>2.3 文件及目录权限实际案例【必须记住】</h5><p>ls  -l 中显示的内容如下：(记住)</p>
+<p>-rwxrw-r– 1 root root 1213 Feb 2 09:39 abc</p>
+<p>10 个字符确定不同用户能对文件干什么</p>
+<p>​        1）第一个字符代表文件类型： 文件 (-),目录(d),链接(l)</p>
+<p>​        其余字符每 3 个一组(rwx) <strong>读(r) 写(w) 执行(x)</strong> </p>
+<p>​        2）第一组 rwx : 文件拥有者的权限是读、写和执行</p>
+<p>​        3）第二组 rw- :  与文件拥有者同一组的用户的权限是读、写但不能执行</p>
+<p>​        4）第三组 r– :  不与文件拥有者同组的其他用户的权限是读不能写和执行可用数字表示为: r=4,w=2,x=1 因此 rwx=4+2+1=7</p>
+<p>​        5） 1    文件：硬连接数或   目录：子目录数</p>
+<p>​        6）root           用户</p>
+<p>​        7）root           组</p>
+<p>​        8）1213          文件大小(字节)，如果是文件夹，显示 4096 字节</p>
+<p>​        9）Feb 2 09:39     最后修改日期</p>
+<p>​        10）abc        文件名</p>
+<h4 id="3、修改权限-chmod"><a href="#3、修改权限-chmod" class="headerlink" title="3、修改权限 - chmod"></a>3、修改权限 - chmod</h4><h5 id="1、基本说明"><a href="#1、基本说明" class="headerlink" title="1、基本说明"></a>1、基本说明</h5><p>​            通过 chmod 指令，可以修改文件或者目录的权限</p>
+<h5 id="2、第一种方式：-、-、-变更权限"><a href="#2、第一种方式：-、-、-变更权限" class="headerlink" title="2、第一种方式：+ 、-、= 变更权限"></a>2、第一种方式：+ 、-、= 变更权限</h5><p>​        u:所有者  g:所有组   o:其他人  a:所有人(u、g、o 的总和)</p>
+<p>​        1) chmod   u=rwx,g=rx,o=x   文件目录名</p>
+<p>​        2) chmod   o+w    文件目录名</p>
+<p>​        3) chmod   a-x    文件目录名</p>
+<p>​    案例演示</p>
+<p>​    1)  给 abc 文件 的所有者读写执行的权限，给所在组读执行权限，给其它组读执行权限。</p>
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113153609433.png" alt="image-20220113153609433" style="zoom:50%;">
+
+<p>​    2） 给abc 文件的所有者除去执行的权限，增加组写的权限</p>
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113153832943.png" alt="image-20220113153832943" style="zoom:50%;">
+
+<p>​    3）给 abc 文件的所有用户添加读的权限</p>
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113154018146.png" alt="image-20220113154018146" style="zoom:50%;">
+
+<p>​        </p>
+<h5 id="3、-第二种方式：通过数字变更权限"><a href="#3、-第二种方式：通过数字变更权限" class="headerlink" title="3、 第二种方式：通过数字变更权限"></a>3、 第二种方式：通过数字变更权限</h5><p>​            规则：<strong>r=4 w=2 x=1</strong> </p>
+<p>​            rwx=4+2+1=7 chmod u=rwx,g=rx,o=x   文件目录名相当于  chmod 751  文件目录名</p>
+<p>​            案例：</p>
+<p>​            要求：将  /home/abc.txt 文件的权限修改成  rwxr-xr-x, 使用给数字的方式实现：</p>
+<p>​            rwx = 4+2+1 = 7</p>
+<p>​            r-x = 4+1=5</p>
+<p>​            r-x = 4+1 =5</p>
+<p>​            指令：<strong>chmod 755 /home/abc.txt</strong></p>
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113154756214.png" alt="image-20220113154756214" style="zoom:50%;">
+
+
+
+<h4 id="4、修改文件所有者-chown"><a href="#4、修改文件所有者-chown" class="headerlink" title="4、修改文件所有者 - chown"></a>4、修改文件所有者 - chown</h4><h5 id="1、基本介绍"><a href="#1、基本介绍" class="headerlink" title="1、基本介绍"></a>1、基本介绍</h5><p>​        chown  newowner  file                       改变文件的所有者</p>
+<p>​        chown newowner:newgroup file      改变用户的所有者和所有组</p>
+<p>​        <strong>-R   如果是目录 则使其下所有子文件或目录递归生效</strong></p>
+<h5 id="2、案例"><a href="#2、案例" class="headerlink" title="2、案例"></a>2、案例</h5><p>​        1）请将 /home/kkk 目录下所有的文件和目录的所有者都修改成 tom</p>
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113161856606.png" alt="image-20220113161856606" style="zoom:50%;">
+
+<p>​        2）请将 /home/kkk 目录下所有的文件和目录的所在组都修改成 bandit(土匪) </p>
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113162314993.png" alt="image-20220113162314993" style="zoom:50%;">
+
+
+
+<h3 id="三、Linux任务调度"><a href="#三、Linux任务调度" class="headerlink" title="三、Linux任务调度"></a>三、Linux任务调度</h3><h4 id="1、原理示意图"><a href="#1、原理示意图" class="headerlink" title="1、原理示意图"></a>1、原理示意图</h4><img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113165252639.png" alt="image-20220113165252639" style="zoom:50%;">
+
+<h4 id="2、概述"><a href="#2、概述" class="headerlink" title="2、概述"></a>2、概述</h4><p>​    任务调度：是指系统在某个时间执行的特定的命令或程序。</p>
+<p>​    任务调度分类：</p>
+<p>​            1.系统工作：有些重要的工作必须周而复始地执行。如病毒扫描等</p>
+<p>​            2.个别用户工作：个别用户可能希望执行某些程序，比如对 mysql 数据库的备份。</p>
+<h4 id="3、基本语法"><a href="#3、基本语法" class="headerlink" title="3、基本语法"></a>3、基本语法</h4><p>​        <strong>crontab [选项]</strong></p>
+<p>​        常用选项：</p>
+<p>​        <img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113165525877.png" alt="image-20220113165525877" style="zoom:50%;"></p>
+<h4 id="4、快速入门"><a href="#4、快速入门" class="headerlink" title="4、快速入门"></a>4、快速入门</h4><p>​        任务要求</p>
+<p>​        设置任务调度文件：/etc/crontab</p>
+<p>​        设置个人任务调度。执行 crontab –e 命令。接着输入任务到调度文件</p>
+<p>​        如：*/1 * * * * ls –l                  /etc/ &gt; /tmp/to.txt</p>
+<p>​        意思说每小时的每分钟执行 ls –l /etc/ &gt; /tmp/to.txt 命令</p>
+<p>​        1）进入到编辑模式</p>
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113170955177.png" alt="image-20220113170955177" style="zoom:50%;">
+
+<p>​        2）添加一下文件</p>
+<p>​            <img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113171039121.png" alt="image-20220113171039121" style="zoom:50%;"></p>
+<p>​        3）效果</p>
+<p>​                是一分钟后在tmp目录下，就会多一个to.txt文件</p>
+<p>​        4）占位符说明        </p>
+<p>​        <img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113171308317.png" alt="image-20220113171308317" style="zoom:50%;">        </p>
+<ul>
+<li>特殊符号说明</li>
+</ul>
+<p>​            <img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113171400349.png" alt="image-20220113171400349" style="zoom:50%;"></p>
+<ul>
+<li><p>特定时间执行任务案例</p>
+<img src="/2022/01/13/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%B8%89)/image-20220113171522858.png" alt="image-20220113171522858" style="zoom:50%;"></li>
+</ul>
+<h4 id="5、任务调度的应用实例"><a href="#5、任务调度的应用实例" class="headerlink" title="5、任务调度的应用实例"></a>5、任务调度的应用实例</h4><h5 id="1、案例1"><a href="#1、案例1" class="headerlink" title="1、案例1"></a>1、案例1</h5><p>每隔1分钟，就将当前的日期信息追加到/tmp/mydate文件中</p>
+<p>​        1）先编写一个文件 /home/mytask1.sh</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">date &gt;&gt;/tmp/mydate</span><br></pre></td></tr></table></figure>
+
+<p>​        2）给mytask1.sh一个可执行的权限</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">chmod u+x mytask1.sh</span><br></pre></td></tr></table></figure>
+
+<p>​        3）crontab -e</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">*/1 * * * * /home/mytask1.sh</span><br></pre></td></tr></table></figure>
+
+]]></content>
+  </entry>
+  <entry>
+    <title>Linux实战篇(五) - 网络配置、进程管理</title>
+    <url>/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/</url>
+    <content><![CDATA[<h3 id="1、Linux网络配置原理图（含虚拟机）"><a href="#1、Linux网络配置原理图（含虚拟机）" class="headerlink" title="1、Linux网络配置原理图（含虚拟机）"></a>1、Linux网络配置原理图（含虚拟机）</h3><img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114141316875.png" alt="image-20220114141316875" style="zoom:50%;">
+
+<p>说明：Linux虚拟机和windows之间是通过windows的虚拟网卡(以太网适配器 VMware Network Adapter VMnet8) 构成了一个网络，它们之间可以进行通信。windows上有一个真实的网卡（可能是无线网卡，可能是物理网卡），这个真实的网卡再通过教室的网关就可以访问互联网。</p>
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114142053767.png" alt="image-20220114142053767" style="zoom:50%;">
+
+
+
+<h3 id="2、查看网络IP和网关"><a href="#2、查看网络IP和网关" class="headerlink" title="2、查看网络IP和网关"></a>2、查看网络IP和网关</h3><h4 id="1、修改ip地址-修改虚拟网络的-ip"><a href="#1、修改ip地址-修改虚拟网络的-ip" class="headerlink" title="1、修改ip地址 (修改虚拟网络的 ip)"></a>1、修改ip地址 (修改虚拟网络的 ip)</h4><p>​    编辑 - 》虚拟网络编辑器</p>
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114142853278.png" alt="image-20220114142853278" style="zoom: 50%;">
+
+<h4 id="2、查看网关"><a href="#2、查看网关" class="headerlink" title="2、查看网关"></a>2、查看网关</h4><img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114143453897.png" alt="image-20220114143453897" style="zoom:50%;">
+
+<h4 id="3、查看-windows-环境的中-VMnet8-网络配置-ipconfig-指令"><a href="#3、查看-windows-环境的中-VMnet8-网络配置-ipconfig-指令" class="headerlink" title="3、查看 windows 环境的中 VMnet8 网络配置 (ipconfig 指令)"></a>3、查看 windows 环境的中 VMnet8 网络配置 (ipconfig 指令)</h4><p>​    1）使用ipconfig查看</p>
+<p>​    2）界面查看</p>
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114143855024.png" alt="image-20220114143855024" style="zoom:50%;">
+
+
+
+<h3 id="3、linux网络环境配置"><a href="#3、linux网络环境配置" class="headerlink" title="3、linux网络环境配置"></a>3、linux网络环境配置</h3><h4 id="1、第一种方式（自动获取）"><a href="#1、第一种方式（自动获取）" class="headerlink" title="1、第一种方式（自动获取）"></a>1、第一种方式（自动获取）</h4><img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114152118193.png" alt="image-20220114152118193" style="zoom:50%;">
+
+<p>缺点: linux 启动后会自动获取 IP,缺点是每次自动获取的 ip 地址可能不一样。这个不适用于做服务器，因为我们的服务器的 ip 需要时固定的。</p>
+<h4 id="2、第二种方法-指定固定的-ip"><a href="#2、第二种方法-指定固定的-ip" class="headerlink" title="2、第二种方法(指定固定的 ip)"></a>2、第二种方法(指定固定的 ip)</h4><p>​           说明：直 接 修 改 配 置 文 件 来 指 定 IP, 并 可 以 连 接 到 外 网 ( 程 序 员 推 荐 ) ， </p>
+<p>​            编 辑    vim /etc/sysconfig/network-scripts/ifcfg-ens33</p>
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114153149369.png" alt="image-20220114153149369" style="zoom:50%;">
+
+<p>​            要求：将 ip 地址配置的静态的，ip 地址为 192.168.18.130</p>
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114153854433.png" alt="image-20220114153854433" style="zoom:50%;">
+
+<p>​                        <strong>修改后，一定要 重启服务</strong></p>
+<p>​                            1)  service network restart</p>
+<p>​                            2)  <strong>reboot 重启系统</strong></p>
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114155022581.png" alt="image-20220114155022581" style="zoom:50%;">
+
+
+
+<h3 id="4、进程管理"><a href="#4、进程管理" class="headerlink" title="4、进程管理"></a>4、进程管理</h3><h4 id="1、说明"><a href="#1、说明" class="headerlink" title="1、说明"></a>1、说明</h4><p>​            查看进行使用的指令是   ps ,一般来说使用的参数是 ps -aux</p>
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114160646075.png" alt="image-20220114160646075" style="zoom:40%;">
+
+<h4 id="2、ps指令详解"><a href="#2、ps指令详解" class="headerlink" title="2、ps指令详解"></a>2、ps指令详解</h4><img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114160254658.png" alt="image-20220114160254658" style="zoom:50%;">
+
+
+
+<h4 id="3、应用实例"><a href="#3、应用实例" class="headerlink" title="3、应用实例"></a>3、应用实例</h4><p>​    要求：以全格式显示当前所有的进程，查看进程的父进程。</p>
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114161218408.png" alt="image-20220114161218408" style="zoom:50%;">
+
+
+
+<h4 id="4、终止进程kill-和killall"><a href="#4、终止进程kill-和killall" class="headerlink" title="4、终止进程kill 和killall"></a>4、终止进程kill 和killall</h4><pre><code>  1、介绍
+</code></pre>
+<p>​            若是某个进程执行一半需要停止时，或是已消了很大的系统资源时，此时可以考虑停止该进程。使用 <strong>kill 命令</strong>来完成此项任务。</p>
+<p>​      2、基本语法</p>
+<p>​                <strong>kill  [选项] 进程号（功能描述：通过进程号杀死进程）</strong></p>
+<p>​                <strong>killall 进程名称（功能描述：通过进程名称杀死进程，也支持通配符，这在系统因负载过大而变得很慢时很有用）</strong></p>
+<p>​       3、常用选项</p>
+<p>​            <strong>-9 ： 表示强迫进程立即停止</strong></p>
+<p>​        4、最佳实践</p>
+<p>​            案例 1：踢掉某个非法登录用户</p>
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114162515236.png" alt="image-20220114162515236" style="zoom:50%;">
+
+
+
+<h4 id="5、查看进程树-pstree"><a href="#5、查看进程树-pstree" class="headerlink" title="5、查看进程树 pstree"></a>5、查看进程树 pstree</h4><p>1、基本语法：</p>
+<p>​    pstree [选项] ,可以更加直观的来看进程信息</p>
+<p>2、常用选项：</p>
+<p>​        -p :显示进程的 PID</p>
+<p>​        -u :显示进程的所属用户</p>
+<h3 id="5、服务（service）管理"><a href="#5、服务（service）管理" class="headerlink" title="5、服务（service）管理"></a>5、服务（service）管理</h3><h4 id="1、服务介绍"><a href="#1、服务介绍" class="headerlink" title="1、服务介绍"></a>1、服务介绍</h4><p>​              服务(service) 本质就是进程，但是是运行在后台的，通常都会监听某个端口，等待其它程序的请求，比如(mysql , sshd 防火墙等)，因此我们又称为守护进程，是 Linux 中非常重要的知识点。</p>
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114163744841.png" alt="image-20220114163744841" style="zoom:50%;">
+
+<h4 id="2、telnet-测试某个端口是否可以访问"><a href="#2、telnet-测试某个端口是否可以访问" class="headerlink" title="2、telnet 测试某个端口是否可以访问"></a>2、telnet 测试某个端口是否可以访问</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">telnet ip地址 端口号</span><br></pre></td></tr></table></figure>
+
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114164746002.png" alt="image-20220114164746002" style="zoom:50%;">
+
+<h4 id="3、查看服务名"><a href="#3、查看服务名" class="headerlink" title="3、查看服务名"></a>3、查看服务名</h4><p>​            1、/etc/init.d/服务名称</p>
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E4%BA%94)/image-20220114165332327.png" alt="image-20220114165332327" style="zoom:50%;">]]></content>
+  </entry>
+  <entry>
+    <title>Linux实战篇（四）- 磁盘</title>
+    <url>/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/</url>
+    <content><![CDATA[<h3 id="一、Linux磁盘分区"><a href="#一、Linux磁盘分区" class="headerlink" title="一、Linux磁盘分区"></a>一、Linux磁盘分区</h3><h4 id="1、原理介绍"><a href="#1、原理介绍" class="headerlink" title="1、原理介绍"></a>1、原理介绍</h4><p>​    1) Linux 来说无论有几个分区，分给哪一目录使用，它归根结底就只有一个根目录，一个独立且唯一的文件结构 , Linux 中每个分区都是用来组成整个文件系统的一部分。</p>
+<p>​    2) Linux 采用了一种叫“载入”的处理方法，它的整个文件系统中包含了一整套的文件和目录， 且将一个分区和一个目录联系起来。这时要载入的一个分区将使它的存储空间在一个目录下获得。</p>
+<h4 id="2、示意图"><a href="#2、示意图" class="headerlink" title="2、示意图"></a>2、示意图</h4><p>​    <img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114101732404.png" alt="image-20220114101732404" style="zoom:50%;"></p>
+<h4 id="3、硬盘说明"><a href="#3、硬盘说明" class="headerlink" title="3、硬盘说明"></a>3、硬盘说明</h4><p>​    1) Linux 硬盘分 <strong>IDE 硬盘和 SCSI 硬盘</strong>，目前基本上是 <strong>SCSI 硬盘</strong></p>
+<p>​    2) 对于 IDE 硬盘，驱动器标识符为“hdx<del>”,其中“hd”表明分区所在设备的类型，这里是指 IDE 硬盘了。“x”为盘号（a 为基本盘，b 为基本从属盘，c 为辅助主盘，d 为辅助从属盘）,“</del>”代表分区，前四个分区用数字 1 到 4 表示，它们是主分区或扩展分区，从 5 开始就是逻辑分区。例，hda3 表示为第一个 IDE 硬盘上的第三个主分区或扩展分区,hdb2 表示为第二个 IDE 硬盘上的第二个主分区或扩展分区。</p>
+<p>​    3) <strong>对于 SCSI 硬盘则标识为“sdx~”，SCSI 硬盘是用“sd”来表示分区所在设备的类型的，其余则和 IDE 硬盘的表示方法一样。</strong></p>
+<p>​    4) 使用 <strong>lsblk 指令</strong>查看当前系统的分区情况</p>
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114101659455.png" alt="image-20220114101659455">
+
+
+
+<h4 id="4、挂载的经典案例"><a href="#4、挂载的经典案例" class="headerlink" title="4、挂载的经典案例"></a>4、挂载的经典案例</h4><h5 id="1、需求说明"><a href="#1、需求说明" class="headerlink" title="1、需求说明"></a>1、需求说明</h5><pre><code> 1、需求是给我们的 Linux 系统增加一个新的硬盘，并且挂载到/home/newdisk
+</code></pre>
+<h5 id><a href="#" class="headerlink" title></a><img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114102620885.png" alt="image-20220114102620885" style="zoom: 50%;"></h5><h5 id="2、具体步骤"><a href="#2、具体步骤" class="headerlink" title="2、具体步骤"></a>2、具体步骤</h5><p>​    <strong>1）虚拟机增加硬盘步骤</strong></p>
+<p>​         在【虚拟机】菜单中，选择【设置】，然后设备列表里添加硬盘，然后一路【下一步】，中间只有选择磁盘大小的地方需要修改，至到完成。然后重启系统（才能识别）！</p>
+<p>​        <img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114104221617.png" alt="image-20220114104221617" style="zoom:50%;"></p>
+<p>​    <strong>2）虚拟机增加硬盘步骤 2</strong></p>
+<p>​        分区命令   fdisk   /dev/sdb</p>
+<p>​        开始对/sdb 分区</p>
+<p>​            •      m  显示命令列表</p>
+<p>​            •      p   显示磁盘分区 同 fdisk  –l</p>
+<p>​            •      n  新增分区</p>
+<p>​            •       d 删除分区</p>
+<p>​            •      w  写入并退出</p>
+<p>说明： 开始分区后输入 n，新增分区，然后选择 p ，分区类型为主分区。两次回车默认剩余全部空间。最后输入 w 写入分区并退出，若不保存退出输入 q。</p>
+<p>​    <strong>3）虚拟机增加硬盘步骤 3</strong></p>
+<p>​        格式化磁盘</p>
+<p>​            分区命令:mkfs -t  ext4   /dev/sdb1</p>
+<p>​            其中 ext4 是分区类型</p>
+<p>​    <strong>4）虚拟机增加硬盘步骤 4</strong></p>
+<p>挂载: 将一个分区与一个目录联系起来，</p>
+<p>​    •  mount     设备名称 挂载目录</p>
+<p>​    •  例如：  mount           /dev/sdb1 /newdisk</p>
+<p>​    •  umount          设备名称  或者  挂载目录</p>
+<p>​    •   例如：    umount /dev/sdb1 或 者  umount /newdisk</p>
+<p>​    <strong>5)  虚拟机增加硬盘步骤 5</strong></p>
+<p>​         永久挂载: 通过修改/etc/fstab 实现挂载添加完成后  执行 <strong>mount –a</strong> 即刻生效</p>
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114110209700.png" alt="image-20220114110209700" style="zoom:50%;">
+
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114110314088.png" alt="image-20220114110314088" style="zoom:50%;">
+
+
+
+<h4 id="5、磁盘情况查询"><a href="#5、磁盘情况查询" class="headerlink" title="5、磁盘情况查询"></a>5、磁盘情况查询</h4><h5 id="1、查询系统整体磁盘使用情况"><a href="#1、查询系统整体磁盘使用情况" class="headerlink" title="1、查询系统整体磁盘使用情况"></a>1、查询系统整体磁盘使用情况</h5><p>​            基本语法：<strong>df -h</strong></p>
+<p>​            应用实例</p>
+<pre><code>           查询系统整体磁盘使用情况
+</code></pre>
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114111252847.png" alt="image-20220114111252847" style="zoom:50%;">
+
+<h5 id="2、查询指定目录的磁盘占用情况"><a href="#2、查询指定目录的磁盘占用情况" class="headerlink" title="2、查询指定目录的磁盘占用情况"></a>2、查询指定目录的磁盘占用情况</h5><p>​        1）基本语法</p>
+<p>​            du -h  /目录</p>
+<p>​        查询指定目录的磁盘占用情况，默认为当前目录</p>
+<p>​            -s 指定目录占用大小汇总</p>
+<p>​            -h 带计量单位</p>
+<p>​            -a 含文件</p>
+<p>​            –max-depth=1  子目录深度</p>
+<p>​            -c 列出明细的同时，增加汇总值</p>
+<p>​        2）应用实例         </p>
+<p>​            查询 /opt 目录的磁盘占用情况，深度为 1    </p>
+<p>​    <img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114111737602.png" alt="image-20220114111737602" style="zoom: 50%;"></p>
+<h5 id="3、磁盘情况-工作实用指令"><a href="#3、磁盘情况-工作实用指令" class="headerlink" title="3、磁盘情况-工作实用指令"></a>3、磁盘情况-工作实用指令</h5><p>​    1）统计/home文件夹下文件的个数        </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ls -l /home | grep &quot;^-&quot; |wc -l</span><br></pre></td></tr></table></figure>
+
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114112125123.png" alt="image-20220114112125123" style="zoom:50%;">
+
+<p>​    2）统计/home 文件夹下目录的个数</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ls -l /home | grep &quot;^d&quot; |wc -l</span><br></pre></td></tr></table></figure>
+
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114112310233.png" alt="image-20220114112310233" style="zoom:50%;">
+
+<p>​    3）统计/home 文件夹下文件的个数，包括子文件夹里的</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ls -lR /home |grep &quot;^-&quot; |wc -l</span><br></pre></td></tr></table></figure>
+
+<img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114112531939.png" alt="image-20220114112531939" style="zoom:50%;">
+
+<p>​    4）以树状显示目录结构</p>
+<p>​        <img src="/2022/01/14/Linux%E5%AE%9E%E6%88%98%E7%AF%87(%E5%9B%9B)/image-20220114112742085.png" alt="image-20220114112742085" style="zoom:50%;"></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Zookeeper学习(一)</title>
+    <url>/2022/01/17/Zookeeper%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<h3 id="1、Zookeeper入门"><a href="#1、Zookeeper入门" class="headerlink" title="1、Zookeeper入门"></a>1、Zookeeper入门</h3><h4 id="1-1-概述"><a href="#1-1-概述" class="headerlink" title="1.1 概述"></a>1.1 概述</h4><p>Zookeeper从设计模式角度来理解：是一个基于<strong>观察者模式设计</strong>的分布式服务管理框架，它负责存储和管理大家都关心的数据，然后接受观察者的注册，一旦这些数据的状态发生变化，Zookeeper就将负责通知已经在Zookeeper上注册的那些观察者做出相应的反应。</p>
+<h4 id="1-2-特点"><a href="#1-2-特点" class="headerlink" title="1.2 特点"></a>1.2 特点</h4><img src="/2022/01/17/Zookeeper%E5%AD%A6%E4%B9%A0/image-20220117154742344.png" alt="image-20220117154742344" style="zoom:50%;">
+
+<p>1）Zookeeper：一个领导者（Leader），多个跟随者（Follower）组成的集群。 </p>
+<p>2）集群中只要有半数以上节点存活，Zookeeper集群就能正常服务。所以Zookeeper适合安装奇数台服务器。 </p>
+<p>3）全局数据一致：每个Server保存一份相同的数据副本，Client无论连接到哪个Server，数据都是一致的。 </p>
+<p>4）更新请求顺序执行，来自同一个Client的更新请求按其发送顺序依次执行。 </p>
+<p>5）数据更新原子性，一次数据更新要么成功，要么失败。 </p>
+<p>6）实时性，在一定时间范围内，Client能读到最新数据。</p>
+<h4 id="1-3-数据结构"><a href="#1-3-数据结构" class="headerlink" title="1.3 数据结构"></a>1.3 数据结构</h4><p>​        ZooKeeper 数据模型的结构与 Unix 文件系统很类似，<strong>整体上可以看作是一棵树，每个节点称做一个 ZNode</strong>。每一个 ZNode 默认能够存储 1MB 的数据，<strong>每个 ZNode 都可以通过其路径唯一标识</strong>。</p>
+<img src="/2022/01/17/Zookeeper%E5%AD%A6%E4%B9%A0/image-20220117160153014.png" alt="image-20220117160153014" style="zoom: 33%;">
+
+
+
+<h4 id="1-4-应用场景"><a href="#1-4-应用场景" class="headerlink" title="1.4 应用场景"></a>1.4 应用场景</h4><p>​        提供的服务包括：统一命名服务、统一配置管理、统一集群管理、服务器节点动态上下 线、软负载均衡等。</p>
+<h5 id="1-4-1-统一命名服务"><a href="#1-4-1-统一命名服务" class="headerlink" title="1.4.1 统一命名服务"></a>1.4.1 统一命名服务</h5><p>​    在分布式环境下，经常需要对应用/服 务进行统一命名，便于识别。 例如：IP不容易记住，而域名容易记住。</p>
+<img src="/2022/01/17/Zookeeper%E5%AD%A6%E4%B9%A0/image-20220117160804778.png" alt="image-20220117160804778" style="zoom:33%;">
+
+<p>​    </p>
+<h5 id="1-4-2-统一配置管理"><a href="#1-4-2-统一配置管理" class="headerlink" title="1.4.2 统一配置管理"></a>1.4.2 统一配置管理</h5><p>​    <strong>1）分布式环境下，配置文件同步非常常见</strong></p>
+<p>​         （1）一般要求一个集群中，所有节点的配置信息是 一致的，比如 Kafka 集群。</p>
+<p>​         （2）对配置文件修改后，希望能够快速同步到各个 节点上。</p>
+<p>​    </p>
+<p>​    <strong>2）配置管理可交由ZooKeeper实现</strong></p>
+<p>​        （1）可将配置信息写入ZooKeeper上的一个Znode。</p>
+<p>​        （2）各个客户端服务器监听这个Znode</p>
+<p>​        （3）一 旦Znode中的数据被修改，ZooKeeper将通知各个客户端服务器</p>
+<img src="/2022/01/17/Zookeeper%E5%AD%A6%E4%B9%A0/image-20220117162106703.png" alt="image-20220117162106703" style="zoom:50%;">
+
+<h5 id="1-4-3-统一集群管理"><a href="#1-4-3-统一集群管理" class="headerlink" title="1.4.3 统一集群管理"></a>1.4.3 统一集群管理</h5><p>​    <strong>1）分布式环境中，实时掌握每个节点的状态是必要的</strong></p>
+<p>​            （1）可根据节点实时状态做出一些调整</p>
+<p>​    <strong>2）ZooKeeper可以实现实时监控节点状态变化</strong></p>
+<p>​            （1）可将节点信息写入ZooKeeper上的一个ZNode</p>
+<p>​            （2）监听这个ZNode可获取它的实时状态变化</p>
+<img src="/2022/01/17/Zookeeper%E5%AD%A6%E4%B9%A0/image-20220117162714600.png" alt="image-20220117162714600" style="zoom:50%;">
+
+<h5 id="1-4-4-服务器动态上下线"><a href="#1-4-4-服务器动态上下线" class="headerlink" title="1.4.4 服务器动态上下线"></a>1.4.4 服务器动态上下线</h5><p>​    <strong>客户端能实时洞察到服务器上下线的变化</strong></p>
+<img src="/2022/01/17/Zookeeper%E5%AD%A6%E4%B9%A0/image-20220117162902235.png" alt="image-20220117162902235" style="zoom:33%;">
+
+
+
+<h5 id="1-4-5-软负载均衡"><a href="#1-4-5-软负载均衡" class="headerlink" title="1.4.5 软负载均衡"></a>1.4.5 软负载均衡</h5><p>​          <strong>在Zookeeper中记录每台服务器的访问数，让访问数最少的服务器去处理最新的客户端请求</strong></p>
+<img src="/2022/01/17/Zookeeper%E5%AD%A6%E4%B9%A0/image-20220117163049756.png" alt="image-20220117163049756" style="zoom:50%;">
+
+
+
+<h3 id="2、Zookeeper安装教程"><a href="#2、Zookeeper安装教程" class="headerlink" title="2、Zookeeper安装教程"></a>2、Zookeeper安装教程</h3><p>​        1、在安装zk之前，虚拟机中首先需要安装jdk</p>
+<p>​            （1）<strong>查看云端目前支持安装的jdk版本</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# yum search java|grep jdk</span><br></pre></td></tr></table></figure>
+
+<p>​            （2）<strong>选择版本后，安装（执行以下<a href="https://www.linuxcool.com/">命令</a>会自动安装jdk相关依赖</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]#  yum install -y java-1.8.0-openjdk</span><br></pre></td></tr></table></figure>
+
+<p>​            （3）<strong>安装完成，验证是否安装成功</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# java -version</span><br></pre></td></tr></table></figure>
+
+<p>​            （4）<strong>通过搜索java文件，查找jdk默认安装目录</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@localhost ~]# find / -name &#x27;java&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>​            </p>
+<p>​        2、安装zk</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>好代码的特性</title>
+    <url>/2022/01/16/%E5%A5%BD%E4%BB%A3%E7%A0%81%E7%9A%84%E7%89%B9%E6%80%A7/</url>
+    <content><![CDATA[<h3 id="好代码的几大特性"><a href="#好代码的几大特性" class="headerlink" title="好代码的几大特性"></a>好代码的几大特性</h3><p>1.代码的正确性 – 对应项目的健壮和有用<br>2.代码的可读性 – 对应后续的维护和开发(可维护性)<br>3.代码的效率性 – 对应项目的使用效率<br>4.代码的可扩展性 –模块、类、函数功能划分清晰<br>5.平台的兼容性、网络的安全性等</p>
+<h4 id="1、代码的正确性"><a href="#1、代码的正确性" class="headerlink" title="1、代码的正确性"></a>1、代码的正确性</h4><p>代码是否设计、结构合理以及充分满足需求等<br>代码是否实现了其功能<br>代码是否有对应的测试代码<br>代码是否有异常处理、日志记录、良好的健壮性</p>
+<h4 id="2、代码的可读性"><a href="#2、代码的可读性" class="headerlink" title="2、代码的可读性"></a>2、代码的可读性</h4><p>模块、类、函数作用划分是否清晰<br>类名称、函数名称、变量名称是否一目了然<br>是否使用较好的抽象数据，便于可读和维护<br>代码呈现组织结构型，便于区分代码之间的相关有无、依赖有无。<br>代码简洁、高效、注释齐全、函数接口，输入输出，注释说明 清晰合理</p>
+<h4 id="3、效率性"><a href="#3、效率性" class="headerlink" title="3、效率性"></a>3、效率性</h4><p>合适匹配的底层、数据库工具、编程语言、工程架构等。<br>优异的算法<br>代码的适用场景和此场景下代码最佳运行效率<br>底层偏向于c，c的高效性</p>
+<h4 id="4、健壮性"><a href="#4、健壮性" class="headerlink" title="4、健壮性"></a>4、健壮性</h4><h5 id="1、健壮性的思想"><a href="#1、健壮性的思想" class="headerlink" title="1、健壮性的思想"></a>1、健壮性的思想</h5><p>（1）正常运行的代码，首要追求高效性</p>
+<p>​          这个“高效性”如果从逻辑的角度来解释, 那么一方面是”高效”地对正确的数据执行正确的算法(方法/策略), 另一方面是”高效”地找出异常, 然后丢给异常处理代码去处理.</p>
+<p>（2）处理异常的代码. 首要追求健壮性</p>
+<p>​          就是程序必须能从异常中自我恢复. 由于代码多数时间跑的是”正常”逻辑, 少数情况下才不得不处理”异常”, 所以”异常”处理的代码中, 首要任务是健壮, 跑不死, 而高效性则是次要的.</p>
+<h5 id="2、健壮性运用"><a href="#2、健壮性运用" class="headerlink" title="2、健壮性运用"></a>2、健壮性运用</h5><p>​    <strong>（1）清理代码，去掉冗余代码</strong></p>
+<p>​             很多时候，我们的代码都是迭代开发的。往往会罗列一些无用的函数，引入一些无用的类库。这些内容貌似无意义，但却是代码中的隐患。可能在后续的类库更新或者函数变更中爆炸。所以，代码要保持清理，对于无用的引用和定义，要加以清除。</p>
+<p>​    <strong>（2）保证函数返回值一致</strong></p>
+<p>​            之前很多时候写函数往往很随性，返回值类型可以能代表函数执行成功或者失败的Bool型，也会有代表实际结果的Str或者Int等类型。<strong>这样的函数在外部调用时痛苦非常，因为在函数调用后处理时，处理不当就会出现typeError，所以在函数编写前，要思考后本函数的作用，同时确定返回值类型，在函数的所有涉及到返回结果时，给予一致类型的返回值，方便外部调用。</strong></p>
+<p>​    <strong>（3）必要情况下的try…Catch处理</strong></p>
+<p>​             Try…Catch…处理异常是各种语言都有的模式。但到底在何处使用却有讲究。<strong>在没有抛异常的语句使用try语句，会降低性能，带来代码冗余，而在需要处理的语句未加异常处理，则会带来运行崩溃的可能</strong>。所以，要深刻的了解代码的语句，是否存在抛异常的可能，对可能抛异常的语言要加以处理。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>如何写高质量代码</title>
+    <url>/2022/01/11/%E5%A6%82%E4%BD%95%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8F%E4%BB%A3%E7%A0%81/</url>
+    <content><![CDATA[<h2 id="一、注释"><a href="#一、注释" class="headerlink" title="一、注释"></a>一、注释</h2><p>（1）写什么样的注释</p>
+<p>​    写有意义的注释，而不是废话的、没有价值的注释。注释的目的是帮助读代码的人了解作者在写代码时的思想。</p>
+<p><img src="/2022/01/11/%E5%A6%82%E4%BD%95%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8F%E4%BB%A3%E7%A0%81/image-20220111221614079.png" alt="image-20220111221614079"></p>
+<p>（2）为代码中的瑕疵写注释</p>
+<p><img src="/2022/01/11/%E5%A6%82%E4%BD%95%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8F%E4%BB%A3%E7%A0%81/image-20220111222032881.png" alt="image-20220111222032881"></p>
+<p><strong>（3）注释编写的步骤：</strong></p>
+<p>​        1）不管你心里再想什么，先把它记录下来</p>
+<p>​        2）读一下这段注释，看看它有什么改进的地方</p>
+<p>​        3）不断改进</p>
+<p><strong>（4）什么地方不需要注释</strong></p>
+<p>​        1）能从代码本身中快速推断的事实</p>
+<p>​        2）用来装饰垃圾代码（比如拗口的方法名），实际上应该把名称修改好</p>
+<p><strong>（5）记录你的想法</strong></p>
+<p>​        1）为什么代码写成这样而不是另外一个样子的内在理由（<strong>指导性批注</strong>）</p>
+<p>​        2）代码中的不足，使用像TODO这样的标注</p>
+<p>​        3）常量背后的意义，为什么是这个值？</p>
+<p><strong>（6）在读者的立场思考</strong></p>
+<p>​        1）预料到代码中哪些部分会让读者产生疑惑，给它加上注释</p>
+<p>​        2）为小白意料之外的行为加注释</p>
+<p>​        3）在文件、类级别上使用“全局观”注释来解释所有的部分是如何一起工作的</p>
+<p>​        4）用注释总结代码块，让读者不会迷茫在细节里</p>
+<p>总结：<strong>言简意赅的注释，通过简单的注释体现代码的核心、深层思想</strong></p>
+<p><img src="/2022/01/11/%E5%A6%82%E4%BD%95%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8F%E4%BB%A3%E7%A0%81/image-20220111222502761.png" alt="image-20220111222502761"></p>
+<p><img src="/2022/01/11/%E5%A6%82%E4%BD%95%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8F%E4%BB%A3%E7%A0%81/image-20220111222544528.png" alt="image-20220111222544528"></p>
+<h2 id="二、简化流程让代码易读"><a href="#二、简化流程让代码易读" class="headerlink" title="二、简化流程让代码易读"></a>二、<strong>简化流程让代码易读</strong></h2><p><img src="/2022/01/11/%E5%A6%82%E4%BD%95%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8F%E4%BB%A3%E7%A0%81/image-20220111222640225.png" alt="image-20220111222640225"></p>
+<h2 id="三、拆分又臭又长的表达式"><a href="#三、拆分又臭又长的表达式" class="headerlink" title="三、拆分又臭又长的表达式"></a>三、<strong>拆分又臭又长的表达式</strong></h2><p>（1）尽量不要在if语句里面写表达式，这样的代码可读性比较差，最好将表达式提出来赋值给一个中间变量，提高代码可读性</p>
+<p><img src="/2022/01/11/%E5%A6%82%E4%BD%95%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8F%E4%BB%A3%E7%A0%81/image-20220111222805807.png" alt="image-20220111222805807"></p>
+<p>（2）反向思考，问题更加简单</p>
+<pre><code>      以下代码是判断传入的集合是否和指定的集合有交集， 如果使用正向的思维，需要判断和比较的内容就很多。如果使用反向的思维，则只需要两行代码就可以解决问题，解决了又臭又长的代码
+</code></pre>
+<p><img src="/2022/01/11/%E5%A6%82%E4%BD%95%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8F%E4%BB%A3%E7%A0%81/image-20220111223048465.png" alt="image-20220111223048465"></p>
+<p>总结：</p>
+<p>引入“解释变量”代替较长的子表达式，有三个好处：</p>
+<p>1、它把巨大的表达式拆分成一个小段</p>
+<p>2、通过简单的名字来描述一个子表达式，让代码文档化</p>
+<p>3、它帮助读者识别代码中重要的概念</p>
+<h2 id="四、变量与可读性"><a href="#四、变量与可读性" class="headerlink" title="四、变量与可读性"></a>四、变量与可读性</h2><p>这一行代码就是多余的</p>
+<p><img src="/2022/01/11/%E5%A6%82%E4%BD%95%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8F%E4%BB%A3%E7%A0%81/image-20220111223411878.png" alt="image-20220111223411878"></p>
+<p>改为：</p>
+<p><img src="/2022/01/11/%E5%A6%82%E4%BD%95%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8F%E4%BB%A3%E7%A0%81/image-20220111223431529.png" alt="image-20220111223431529"></p>
+<p>总结：</p>
+<p>1）减少变量，通过立刻处理结果来消除中间变量</p>
+<p>2）<strong>减少变量作用域，作用域越小越好</strong></p>
+<p>3）变量只写一次最好，只设置一次的变量会让代码变得更加容易理解。</p>
+<h2 id="五、抽离无关代码"><a href="#五、抽离无关代码" class="headerlink" title="五、抽离无关代码"></a>五、<strong>抽离无关代码</strong></h2><p><img src="/2022/01/11/%E5%A6%82%E4%BD%95%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8F%E4%BB%A3%E7%A0%81/image-20220111223523193.png" alt="image-20220111223523193"></p>
+<p><img src="/2022/01/11/%E5%A6%82%E4%BD%95%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8F%E4%BB%A3%E7%A0%81/image-20220111223532507.png" alt="image-20220111223532507"></p>
+<p><strong>尽量少用非逻辑，使用正逻辑，便于理解</strong></p>
+<h2 id="六、好的方法"><a href="#六、好的方法" class="headerlink" title="六、好的方法"></a>六、好的方法</h2><h4 id="1、封装判断"><a href="#1、封装判断" class="headerlink" title="1、封装判断"></a>1、封装判断</h4><p>​    好的方法是清晰易懂的，如果把解释条件意图作为函数抽离出来，用函数名把判断条件的语义显性化地表达出来，就能立即提升代码的可读性和可理解性</p>
+<p>原始代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if(customer.getCrmUserId().equals(NIL_VALUE)</span><br><span class="line">              &amp;&amp; customer.getCustomerGroup() != CustomerGroup. CANCEL_ GROUP)</span><br><span class="line">        &#123;</span><br><span class="line">           privateSea.pickUp(customer);     </span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述代码中，if后面的判断比较恶心，原因是缺少封装和合理的命名，可以使用封装判断改为：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>(canPickUpToPrivateSea())</span><br><span class="line">        &#123;</span><br><span class="line">            privateSea.pickUp(customer);          </span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line"> <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">canPickUpToPrivateSea</span><span class="params">()</span></span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(StringUtil.isBlank(<span class="keyword">this</span>.getCrmUserId()))&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      <span class="keyword">if</span>(<span class="keyword">this</span>.getCustomerGroup() == CustomerGroup.CANCEL_GROUP)&#123;</span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+
+<p>重构后的代码的可读性自然提升不少。</p>
+<h4 id="2、方法参数"><a href="#2、方法参数" class="headerlink" title="2、方法参数"></a>2、方法参数</h4><p>总体上说，参数越少越容易理解，方法也越容易测试和使用，如果方法需要3个以上参数，就说明其中一些参数应该封装为类。</p>
+<h4 id="3、短小的方法"><a href="#3、短小的方法" class="headerlink" title="3、短小的方法"></a>3、短小的方法</h4><p>有时保持代码的逻辑不变，只是把长方法改为多个短方法，代码的可读性就能提高很多，。超长方法是典型的代码“坏味道”，对超长方法的结构化分解是提升代码可读性最有效的方式之一。</p>
+<h4 id="4、职责单一"><a href="#4、职责单一" class="headerlink" title="4、职责单一"></a>4、职责单一</h4><p><strong>一个方法只做一件事情，也就是方法级别的单一职责原则（SRP）</strong></p>
+<p>遵循SRP不仅可以提升代码的可读性，还能提升代码的可复用性。因为职责越单一，功能越内聚，就越有可能被复用，这和代码的行数没有直接的关联性，但是有间接的关联性。</p>
+<p>​    长方法意味着肯定需要拆分，需要用多个子函数的组合进行更好的表达。然而短小的函数并不一定就意味着不需要拆分，只要不满足SRP,值得进一步分解。哪怕分解后的子函数只有一行代码，只要有助于业务语义显性化的表达，就是值得到。</p>
+<h4 id="5、精简辅助代码"><a href="#5、精简辅助代码" class="headerlink" title="5、精简辅助代码"></a>5、精简辅助代码</h4><p>​    辅助代码就是程序运行中不可少的代码，但又不是处理业务逻辑的核心代码，比如判空，打印日志，鉴权，降级和缓存检查等。这些代码一般会在多个方法中重复，减少辅助代码可以让代码显得更加整洁，易于维护。</p>
+<p>​    </p>
+<h4 id="6、优化判空"><a href="#6、优化判空" class="headerlink" title="6、优化判空"></a>6、优化判空</h4><p>​    判空是为让代码具有一定的健壮性，只是这样的判空代码多了，会干扰阅读代码的流畅性。</p>
+<p>原始代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">String isocode = user.getAddress(). getCountry(). getIsocode(). toUpperCase();</span><br></pre></td></tr></table></figure>
+
+<p>因为任何访问对象方法或属性的调用都可能会导致NPE,因此如果要确保不触发异常，就得在访问每一个值之前对其进行明确的检查：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if (user != null) &#123;</span><br><span class="line">    Address address = user.getAddress();</span><br><span class="line">    if (address != null) &#123;</span><br><span class="line">        Country country = address.getCountry();</span><br><span class="line">        if (country != null) &#123;</span><br><span class="line">            String isocode = country.getIsocode();</span><br><span class="line">            if (isocode != null) &#123;</span><br><span class="line">                isocode = isocode.toUpperCase();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Java8 - Optional类可以用Optional类代替冗长的null检查：</strong> </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">String isocode = Optional.ofNullable(user)</span><br><span class="line">  .flatMap(User::getAddress)</span><br><span class="line">  .flatMap(Address::getCountry)</span><br><span class="line">  .map(Country::getIsocode)</span><br><span class="line">  .orElse(&quot;default&quot;);</span><br></pre></td></tr></table></figure>
+
+<p>这种写法就显得很简洁，简洁是一种美。</p>
+<h4 id="7、组合函数模式"><a href="#7、组合函数模式" class="headerlink" title="7、组合函数模式"></a>7、组合函数模式</h4><p>​        1、是一个非常容易理解上手、实用、对代码可读性和可维护性起到很有效的编程原则。</p>
+<p>​        2、组合的方式是在代码重构中使用比较多，在重构代码之前需要读懂代码做了哪几件事，再进行重构。组合函数要求所有的公有方法的读起来像一系列执行步骤的概要，而这些步骤的真正实现细节是在私有方法里面的。</p>
+<p>​        3、<strong>组合函数要求将一个大函数拆成多个子函数的组合。</strong></p>
+<h4 id="8、SLAP-抽象层次一致性"><a href="#8、SLAP-抽象层次一致性" class="headerlink" title="8、SLAP - 抽象层次一致性"></a>8、SLAP - 抽象层次一致性</h4><p>​       抽象层次一致性要求方法体的内容必须在同一个抽象层次上。如果高层次抽象和底层细节杂糅在一起，就会显得很乱，难以理解、</p>
+]]></content>
+  </entry>
+</search>
