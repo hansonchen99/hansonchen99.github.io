@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="一、基础知识1、通过行为参数化传递代码1、java8对于程序员的主要好处在于它提供了更多的编程工具和概念，能以更快，更重要的是能以更为简洁、更易于维护的方式解决新的或现有的编程问题。 2、函数式编程思想，更适应新的计算机体系结构 3、什么是通过行为参数化传递代码？ ​    1）行为参数化就是可以帮助你处理频繁变更的需求的一种软件开发模式。 ​    2）让方法接受多种行为（或战略）作为参数，并在">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java8实战一">
+<meta property="og:url" content="http://example.com/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/index.html">
+<meta property="og:site_name" content="你的时间花在哪儿，人生的花就开在哪儿">
+<meta property="og:description" content="一、基础知识1、通过行为参数化传递代码1、java8对于程序员的主要好处在于它提供了更多的编程工具和概念，能以更快，更重要的是能以更为简洁、更易于维护的方式解决新的或现有的编程问题。 2、函数式编程思想，更适应新的计算机体系结构 3、什么是通过行为参数化传递代码？ ​    1）行为参数化就是可以帮助你处理频繁变更的需求的一种软件开发模式。 ​    2）让方法接受多种行为（或战略）作为参数，并在">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124141916000.png">
+<meta property="og:image" content="http://example.com/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124142306136.png">
+<meta property="og:image" content="http://example.com/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124142403874.png">
+<meta property="og:image" content="http://example.com/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124142549910.png">
+<meta property="og:image" content="http://example.com/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124144541163.png">
+<meta property="og:image" content="http://example.com/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124144618279.png">
+<meta property="og:image" content="http://example.com/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124145218793.png">
+<meta property="og:image" content="http://example.com/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124150857992.png">
+<meta property="og:image" content="http://example.com/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124151014950.png">
+<meta property="og:image" content="http://example.com/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124151218850.png">
+<meta property="og:image" content="http://example.com/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124151615360.png">
+<meta property="og:image" content="http://example.com/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124152808596.png">
+<meta property="og:image" content="http://example.com/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124153006513.png">
+<meta property="og:image" content="http://example.com/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124220459462.png">
+<meta property="og:image" content="http://example.com/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124164410020.png">
+<meta property="og:image" content="http://example.com/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124170309472.png">
+<meta property="og:image" content="http://example.com/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124172318086.png">
+<meta property="og:image" content="http://example.com/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124172937998.png">
+<meta property="og:image" content="http://example.com/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220125152254775.png">
+<meta property="article:published_time" content="2022-01-24T06:03:04.000Z">
+<meta property="article:modified_time" content="2022-01-25T07:45:41.163Z">
+<meta property="article:author" content="Mr.chen">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124141916000.png">
+
+<link rel="canonical" href="http://example.com/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>java8实战一 | 你的时间花在哪儿，人生的花就开在哪儿</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">你的时间花在哪儿，人生的花就开在哪儿</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录生活中的点滴</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">10</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/qq.jpg">
+      <meta itemprop="name" content="Mr.chen">
+      <meta itemprop="description" content="个人技术博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="你的时间花在哪儿，人生的花就开在哪儿">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          java8实战一
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-01-24 14:03:04" itemprop="dateCreated datePublished" datetime="2022-01-24T14:03:04+08:00">2022-01-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-25 15:45:41" itemprop="dateModified" datetime="2022-01-25T15:45:41+08:00">2022-01-25</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="一、基础知识"><a href="#一、基础知识" class="headerlink" title="一、基础知识"></a>一、基础知识</h3><h3 id="1、通过行为参数化传递代码"><a href="#1、通过行为参数化传递代码" class="headerlink" title="1、通过行为参数化传递代码"></a>1、通过行为参数化传递代码</h3><p>1、java8对于程序员的主要好处在于它提供了更多的编程工具和概念，能以更快，更重要的是能以更为简洁、更易于维护的方式解决新的或现有的编程问题。</p>
+<p>2、函数式编程思想，更适应新的计算机体系结构</p>
+<p>3、什么是通过行为参数化传递代码？</p>
+<p>​    1）<strong>行为参数化就是可以帮助你处理频繁变更的需求的一种软件开发模式。</strong></p>
+<p>​    2）让方法接受多种行为（或战略）作为参数，并在内部使用，来完成不同的行为。</p>
+<p>4、处理思路：</p>
+<p>​        需求：用户需要筛选出重量大于150克，后来用户有需要筛选出颜色是绿色的苹果。</p>
+<p>​    1）<strong>原始思维</strong>：处理筛选的问题，<strong>是在方法中添加参数</strong>，这种方法只能解决一时的问题，当外部的条件发生改变，方法则也需要跟着变化。</p>
+<p>​    一种把所有属性结合起来的笨拙方法：<img src="/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124141916000.png" alt="image-20220124141916000"></p>
+<p>​    2）<strong>行为参数化</strong></p>
+<img src="/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124142306136.png" alt="image-20220124142306136" style="zoom:50%;">
+
+<p><img src="/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124142403874.png" alt="image-20220124142403874" style="zoom:50%;"><img src="/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124142549910.png" alt="image-20220124142549910"></p>
+<p>2）以上这种方式的缺点是对付太啰嗦，过程较为复杂</p>
+<h4 id="2、使用Lambda表达式"><a href="#2、使用Lambda表达式" class="headerlink" title="2、使用Lambda表达式"></a>2、使用Lambda表达式</h4><h4 id="1）将List类型抽象化"><a href="#1）将List类型抽象化" class="headerlink" title="1）将List类型抽象化"></a>1）将List类型抽象化<img src="/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124144541163.png" alt="image-20220124144541163"></h4><p><img src="/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124144618279.png" alt="image-20220124144618279"></p>
+<p><img src="/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124145218793.png" alt="image-20220124145218793"></p>
+<h3 id="2、Lambda表达式"><a href="#2、Lambda表达式" class="headerlink" title="2、Lambda表达式"></a>2、Lambda表达式</h3><h4 id="1）Lambda表达式的优点"><a href="#1）Lambda表达式的优点" class="headerlink" title="1）Lambda表达式的优点"></a>1）Lambda表达式的优点</h4><p>​        <strong>使用Lambda表达式可以写出更加简洁、更加灵活的代码</strong></p>
+<p>2）Lambda表达式理解为简洁地表示可传递的匿名函数的一种方式：它没有名称，但它有参数列表，函数主题，返回类型，可能还有一个可以抛出的异常列表。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 匿名类的方式编写</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">Comparator&lt;Apple&gt; byWeight = <span class="keyword">new</span> Comparator&lt;Apple&gt;() &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Apple a1, Apple a2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> a1.getWeight().compareTo(a2.getWeight());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 使用Lambda表达式的方式</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">Comparator&lt;Apple&gt; byWeightV1 = </span><br><span class="line">        (Apple a1, Apple a2) -&gt; a1.getWeight().compareTo(a2.getWeight());</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124150857992.png" alt="image-20220124150857992"></p>
+<p><img src="/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124151014950.png" alt="image-20220124151014950"></p>
+<p><img src="/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124151218850.png" alt="image-20220124151218850"></p>
+<h4 id="2）Lambda表达式语法"><a href="#2）Lambda表达式语法" class="headerlink" title="2）Lambda表达式语法"></a>2）Lambda表达式语法</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(parameters)-&gt; expression</span><br></pre></td></tr></table></figure>
+
+<p>​        或（请注意语句的花括号）    </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(parameters)-&gt; &#123; statements; &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="3）使用案例"><a href="#3）使用案例" class="headerlink" title="3）使用案例"></a>3）使用案例</h4><p><img src="/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124151615360.png" alt="image-20220124151615360"></p>
+<h4 id="4）函数式接口"><a href="#4）函数式接口" class="headerlink" title="4）函数式接口"></a>4）函数式接口</h4><p>​    函数式接口就是只定义一个抽象方法的接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Predicate</span>&lt;<span class="title">T</span>&gt;</span>&#123;</span><br><span class="line">           <span class="function"><span class="keyword">boolean</span> <span class="title">test</span> <span class="params">(T t)</span></span>;</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124152808596.png" alt="image-20220124152808596"></p>
+<p><img src="/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124153006513.png" alt="image-20220124153006513"></p>
+<h4 id="5）使用案例-Consumer"><a href="#5）使用案例-Consumer" class="headerlink" title="5）使用案例 - Consumer"></a>5）使用案例 - Consumer</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Consumer</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">accept</span><span class="params">(T t)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConsumerService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        forEach(Arrays.asList(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>), (Integer i) -&gt; System.out.println(i));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">forEach</span><span class="params">(List&lt;T&gt; list, Consumer&lt;T&gt; c)</span></span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(T i : list)&#123;</span><br><span class="line">            c.accept(i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124220459462.png" alt="image-20220124220459462" style="zoom: 50%;">
+
+<p><img src="/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124164410020.png" alt="image-20220124164410020"></p>
+<h4 id="6）使用案例-Function"><a href="#6）使用案例-Function" class="headerlink" title="6）使用案例 - Function"></a>6）使用案例 - Function</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Function</span>&lt;<span class="title">T</span>,<span class="title">R</span>&gt; </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="function">R <span class="title">apply</span><span class="params">(T t)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FunctionService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;Integer&gt; map = map(Arrays.asList(<span class="string">&quot;asdxcvndf&quot;</span>, <span class="string">&quot;xcvxcv&quot;</span>, <span class="string">&quot;fghfgsdfsdfsdfsdfsdfh&quot;</span>), (String s) -&gt; s.length());</span><br><span class="line">        log.info(<span class="string">&quot;----&gt;&#123;&#125;&quot;</span>,map); <span class="comment">// [9, 6, 21]</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T,R&gt; <span class="function">List&lt;R&gt; <span class="title">map</span><span class="params">(List&lt;T&gt; list, Function&lt;T,R&gt; f)</span></span>&#123;</span><br><span class="line">        List&lt;R&gt; rs = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span>(T s : list)&#123;</span><br><span class="line">            rs.add(f.apply(s));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> rs;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124170309472.png" alt="image-20220124170309472"></p>
+<h4 id="7）java中的装箱和拆箱"><a href="#7）java中的装箱和拆箱" class="headerlink" title="7）java中的装箱和拆箱"></a>7）java中的装箱和拆箱</h4><p>​        装箱就是自动将<strong>基本数据类型转换为包装器类型</strong>；</p>
+<p>​        拆箱就是自动将<strong>包装器类型转换为基本数据类型</strong>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Integer i = <span class="number">10</span>;  <span class="comment">//装箱</span></span><br><span class="line"><span class="keyword">int</span> n = i;   <span class="comment">//拆箱</span></span><br></pre></td></tr></table></figure>
+
+<p>java中装箱和拆箱操作是自动完成的。</p>
+<p>下面的代码是有效的（<strong>一个int被装箱为Integer</strong>）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; list=<span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">300</span>; i &lt; <span class="number">400</span>; i++)&#123;</span><br><span class="line">            list.add(i);</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这在性能方法是要付出代价的。<strong>装箱后的值本质上就是把原始类型包裹起来，并保存在堆中</strong>。因此，装箱后的值需要更多的内存，并需要额外的内存搜素来获取被包裹的原始值。<strong>所以在代码的编写中尽量不要进行装箱的操作</strong>。</p>
+<p>函数式接口：</p>
+<p><img src="/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124172318086.png" alt="image-20220124172318086"></p>
+<h4 id="8）类型检查、类型推断及限制"><a href="#8）类型检查、类型推断及限制" class="headerlink" title="8）类型检查、类型推断及限制"></a>8）类型检查、类型推断及限制</h4><h5 id="1）类型检查"><a href="#1）类型检查" class="headerlink" title="1）类型检查"></a>1）类型检查</h5><img src="/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220124172937998.png" alt="image-20220124172937998" style="zoom:50%;">
+
+
+
+<h3 id="3、Lambda表达式二"><a href="#3、Lambda表达式二" class="headerlink" title="3、Lambda表达式二"></a>3、Lambda表达式二</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test02</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">// Lambda 表达式</span></span><br><span class="line">    Comparator&lt;Integer&gt; comparator = (a, b) -&gt; Integer.compare(a, b);</span><br><span class="line"></span><br><span class="line">    TreeSet&lt;Integer&gt; set = <span class="keyword">new</span> TreeSet&lt;&gt;(comparator);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1、演变过程："><a href="#1、演变过程：" class="headerlink" title="1、演变过程："></a>1、演变过程：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- 垃圾代码 --&gt; 策略模式 --&gt; 匿名内部类 --&gt; Lambda表达式</span><br></pre></td></tr></table></figure>
+
+<h4 id="2、基础语法："><a href="#2、基础语法：" class="headerlink" title="2、基础语法："></a>2、基础语法：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- 操作符：-&gt;</span><br><span class="line">- 左侧：参数列表</span><br><span class="line">- 右侧：执行代码块 / Lambda 体</span><br></pre></td></tr></table></figure>
+
+<p>语法格式一：无参数，无返回值    </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">() -&gt; System.out.println(&quot;Hello lambda!&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">        Runnable r = <span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;hello world!&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        r.run();</span><br><span class="line">        System.out.println(<span class="string">&quot;-----------------&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 使用Lambda表达式</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        Runnable r1 = () -&gt; System.out.println(<span class="string">&quot;--r1--&quot;</span>);</span><br><span class="line">        r1.run();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3、语法格式二"><a href="#3、语法格式二" class="headerlink" title="3、语法格式二"></a>3、语法格式二</h4><p>​    1）有一个参数，无返回值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(x) -&gt; System.out.println(x);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span></span>&#123;</span><br><span class="line">       Consumer&lt;String&gt; con = (x) -&gt; System.out.println(x);</span><br><span class="line">       con.accept(<span class="string">&quot;张三牛逼！&quot;</span>);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    2）有一个参数，无返回值（小括号可以省略不写）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span></span>&#123;</span><br><span class="line">       Consumer&lt;String&gt; con = x -&gt; System.out.println(x);</span><br><span class="line">       con.accept(<span class="string">&quot;张三牛逼！&quot;</span>);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    3）有两个及以上的参数，有返回值，并且Lambda体中有多条语句</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span></span>&#123;</span><br><span class="line">       Comparator&lt;Integer&gt; comparator = (a,b) -&gt;&#123;</span><br><span class="line">           <span class="keyword">return</span> Integer.compare(a,b);</span><br><span class="line">       &#125;;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    4）有两个及以上的参数，有返回值，并且Lambda体中只有1条语句（<strong>大括号与return都可以省略不写</strong>）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test4</span><span class="params">()</span></span>&#123;</span><br><span class="line">       Comparator&lt;Integer&gt; comparator = (a,b) -&gt;Integer.compare(a,b);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>Lambda 表达式 参数的数据类型可以省略不写,因为JVM 编译器通过上下文推断出数据类型，可以自动进行 “类型推断”</strong></li>
+</ul>
+<h3 id="4、函数式接口"><a href="#4、函数式接口" class="headerlink" title="4、函数式接口"></a>4、函数式接口</h3><p>​        <strong>接口中只有一个抽象方法的接口就是函数式接口</strong>，可以使用**@FunctionalIterface**修饰，可以检测是否是函数式接口。</p>
+<p>测试：</p>
+<ul>
+<li><p>定义一个函数式接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MyFun</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">getValue</span><span class="params">(Integer num)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>使用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test5</span><span class="params">()</span></span>&#123;</span><br><span class="line">       Integer operation = operation(<span class="number">100</span>, x -&gt; x * x);</span><br><span class="line">       log.info(<span class="string">&quot;----:&#123;&#125;&quot;</span>,operation);</span><br><span class="line">       log.info(<span class="string">&quot;----:&#123;&#125;&quot;</span>,operation(<span class="number">200</span>,y -&gt; y + <span class="number">200</span>));</span><br><span class="line">       log.info(<span class="string">&quot;----:&#123;&#125;&quot;</span>,operation(<span class="number">50</span>,z -&gt; z + <span class="number">1000</span>));</span><br><span class="line">  </span><br><span class="line">   &#125;</span><br><span class="line">  </span><br><span class="line">   <span class="function"><span class="keyword">public</span> Integer <span class="title">operation</span><span class="params">(Integer num, MyFun mf)</span></span>&#123;</span><br><span class="line">       <span class="keyword">return</span> mf.getValue(num);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>练习：</p>
+<img src="/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/image-20220125152254775.png" alt="image-20220125152254775" style="zoom:50%;">
+
+<p>1）第一题</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test6</span><span class="params">()</span></span>&#123;</span><br><span class="line">    List&lt;Employee&gt; list = getList();</span><br><span class="line">    Collections.sort(list,(e1,e2) -&gt;&#123;</span><br><span class="line">        <span class="keyword">if</span>(e1.getAge() == e2.getAge())&#123;</span><br><span class="line">            <span class="keyword">return</span> e1.getName().compareTo(e2.getName());</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> -Integer.compare(e1.getAge(),e2.getAge());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">for</span> (Employee employee : list) &#123;</span><br><span class="line">        System.out.println(employee);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2）第二题</p>
+<ul>
+<li>函数式接口定义</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MyFunction</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">getStr</span><span class="params">(String str)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>测试</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">strHandle</span><span class="params">(String str, MyFunction mf)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mf.getStr(str);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test07</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String str1 = strHandle(<span class="string">&quot;sdfjndfg&quot;</span>, (str) -&gt; str.toUpperCase());</span><br><span class="line">        System.out.println(str1);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;-----------------------&quot;</span>);</span><br><span class="line"></span><br><span class="line">        String s = strHandle(<span class="string">&quot;  sdfnjnjsdfjhj   &quot;</span>, (str) -&gt; str.trim());</span><br><span class="line">        System.out.println(s);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>3）第三题</p>
+<ul>
+<li><p>函数式接口定义</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MyFun2</span>&lt;<span class="title">T</span>,<span class="title">R</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">R <span class="title">getValue</span><span class="params">(T t1,T t2)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>测试</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">op</span><span class="params">(Long l1, Long l2, MyFun2&lt;Long,Long&gt; mf)</span></span>&#123;</span><br><span class="line">     System.out.println(mf.getValue(l1,l2));</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test08</span><span class="params">()</span></span>&#123;</span><br><span class="line">    op(<span class="number">100L</span>,<span class="number">200L</span>,(x,y) -&gt; x + y); <span class="comment">// 300</span></span><br><span class="line">    op(<span class="number">100L</span>,<span class="number">700L</span>,(x,y) -&gt; x * y); <span class="comment">// 70000</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Mr.chen
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2022/01/24/java8%E5%AE%9E%E6%88%98%E4%B8%80/" title="java8实战一">http://example.com/2022/01/24/java8实战一/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/01/24/TCP-IP%E5%8D%8F%E8%AE%AE%E4%B8%80/" rel="prev" title="TCP/IP协议一">
+      <i class="fa fa-chevron-left"></i> TCP/IP协议一
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">一、基础知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E9%80%9A%E8%BF%87%E8%A1%8C%E4%B8%BA%E5%8F%82%E6%95%B0%E5%8C%96%E4%BC%A0%E9%80%92%E4%BB%A3%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">1、通过行为参数化传递代码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E4%BD%BF%E7%94%A8Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">2.1.</span> <span class="nav-text">2、使用Lambda表达式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1%EF%BC%89%E5%B0%86List%E7%B1%BB%E5%9E%8B%E6%8A%BD%E8%B1%A1%E5%8C%96"><span class="nav-number">2.2.</span> <span class="nav-text">1）将List类型抽象化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">2、Lambda表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%EF%BC%89Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E4%BC%98%E7%82%B9"><span class="nav-number">3.1.</span> <span class="nav-text">1）Lambda表达式的优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%EF%BC%89Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%AF%AD%E6%B3%95"><span class="nav-number">3.2.</span> <span class="nav-text">2）Lambda表达式语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%EF%BC%89%E4%BD%BF%E7%94%A8%E6%A1%88%E4%BE%8B"><span class="nav-number">3.3.</span> <span class="nav-text">3）使用案例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%EF%BC%89%E5%87%BD%E6%95%B0%E5%BC%8F%E6%8E%A5%E5%8F%A3"><span class="nav-number">3.4.</span> <span class="nav-text">4）函数式接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5%EF%BC%89%E4%BD%BF%E7%94%A8%E6%A1%88%E4%BE%8B-Consumer"><span class="nav-number">3.5.</span> <span class="nav-text">5）使用案例 - Consumer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6%EF%BC%89%E4%BD%BF%E7%94%A8%E6%A1%88%E4%BE%8B-Function"><span class="nav-number">3.6.</span> <span class="nav-text">6）使用案例 - Function</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7%EF%BC%89java%E4%B8%AD%E7%9A%84%E8%A3%85%E7%AE%B1%E5%92%8C%E6%8B%86%E7%AE%B1"><span class="nav-number">3.7.</span> <span class="nav-text">7）java中的装箱和拆箱</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8%EF%BC%89%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5%E3%80%81%E7%B1%BB%E5%9E%8B%E6%8E%A8%E6%96%AD%E5%8F%8A%E9%99%90%E5%88%B6"><span class="nav-number">3.8.</span> <span class="nav-text">8）类型检查、类型推断及限制</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1%EF%BC%89%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5"><span class="nav-number">3.8.1.</span> <span class="nav-text">1）类型检查</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%BA%8C"><span class="nav-number">4.</span> <span class="nav-text">3、Lambda表达式二</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E6%BC%94%E5%8F%98%E8%BF%87%E7%A8%8B%EF%BC%9A"><span class="nav-number">4.1.</span> <span class="nav-text">1、演变过程：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%EF%BC%9A"><span class="nav-number">4.2.</span> <span class="nav-text">2、基础语法：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81%E8%AF%AD%E6%B3%95%E6%A0%BC%E5%BC%8F%E4%BA%8C"><span class="nav-number">4.3.</span> <span class="nav-text">3、语法格式二</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E5%87%BD%E6%95%B0%E5%BC%8F%E6%8E%A5%E5%8F%A3"><span class="nav-number">5.</span> <span class="nav-text">4、函数式接口</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Mr.chen"
+      src="/images/qq.jpg">
+  <p class="site-author-name" itemprop="name">Mr.chen</p>
+  <div class="site-description" itemprop="description">个人技术博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mr.Chen</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="eys"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
